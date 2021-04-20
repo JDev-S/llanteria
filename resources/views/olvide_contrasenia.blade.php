@@ -66,7 +66,8 @@
       <h2>Olvide mi contraseña?</h2>
       <p>Ingresa tu correo electrónico y se te enviará la contraseña a tu correo.</p>
 
-      <form method="post" role="form" autocomplete="off">
+      <form method="post" enctype="multipart/form-data" method="POST" action={{route('obtener_contrasenia')}}>
+            {{ csrf_field() }}
         <div class="form-group form-material floating" data-plugin="formMaterial">
           <input type="email" class="form-control empty" id="inputEmail" name="email">
           <label class="floating-label" for="inputEmail">Tú correo electrónico</label>

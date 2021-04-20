@@ -16,7 +16,6 @@ class LoginController extends Controller
      public function Login(Request $input)
 
 	{
-         
          if(session('correo_electronico')!= "")
          {
              echo 'hay alguien activo';
@@ -104,7 +103,8 @@ class LoginController extends Controller
       
         if($cantidad>0)
         {
-            $nombre=$data[0]->nombre;
+            $nombre=$data[0]->nombre_completo;
+            $id=$data[0]->id_usuario;
             $length=10;
             $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
             $charactersLength = strlen($characters);
@@ -113,14 +113,53 @@ class LoginController extends Controller
                 $password .= $characters[rand(0, $charactersLength - 1)];
                 }
             
-                $encryptedPassword = bcrypt($password);
-                $query2=DB::update("update  usuario set contrasenia='$encryptedPassword' where correo_electronico=?",[$email]);
+                //$encryptedPassword = bcrypt($password);
+            //$query2=DB::update("update  usuario set contrasenia='$password' where correo_electronico=?",[$email]);
+            $query=DB::update("update  usuario set contrasenia='$password' where id_usuario=?",[$id]);
             $this->email($email, $nombre, $password);
-            return redirect('/iniciar_sesion');
+            return redirect('/');
         }
         else{
-            return redirect('/mi_contraseña');
+            return redirect('/cambiar_contrasenia');
         }
     }
+    
+    public function email($email, $nombre, $password){
+       // Configuration
+       $smtpAddress = 'smtp.gmail.com';
+       $port = 465;
+       $encryption = 'ssl';
+       $yourEmail = 'juanjesuspadrondiaz@gmail.com';
+       $yourPassword = 'jjpd1996';
+
+       // Prepare transport
+        $transport = (new \Swift_SmtpTransport($smtpAddress,$port,$encryption))
+        ->setUsername($yourEmail)
+        ->setPassword($yourPassword )
+        ;
+
+        $mailer = new \Swift_Mailer($transport);
+               // Prepare content
+               $view = View::make('email_template', [
+                   'message' => ' Estimado '.$nombre,
+                   'message2'=>'En JDev-S cuidamos tu seguridad, por tal motivo, te estamos enviando la contraseña que nos solicitaste',
+                   'message3'=>'Nombre de usuario :'.$nombre,
+                   'message4'=>'Nueva Contraseña :'.$password,
+                   'message5'=>'Es recomendable cambiar las contraseñas continuamente para obtener la más alta seguridad en nuestro sitio.'
+
+               ]);
+
+               $html = $view->render();
+
+               // Send email
+        $message = new \Swift_Message('Cambio de Contraseña');
+        $message->setFrom([$yourEmail => 'Llantimax'])->setTo([$email => $nombre])->setBody($html, 'text/html');
+           
+       if($mailer->send($message)){
+           return "Check your inbox";
+       }
+       return "Something went wrong :(";
+       
+   }
 
 }

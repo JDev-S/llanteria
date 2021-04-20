@@ -33,7 +33,7 @@ class ClientesController extends Controller
             
    //echo $fecha.' '.$nombre_cliente.' '.$telefono.' '.$correo.' '.$sucursal.' '.$cliente_habitual;
         
-        $ingresar=DB::insert('insert into clientes (id_cliente, fecha_registro, nombre_completo, telefono,correo_electronico, id_sucursal, cliente_habitual) values( ?, ?, ?, ?, ?, ?, ?)', [2,$fecha,$nombre_cliente, $telefono, $correo, $sucursal, $cliente_habitual]);
+        $ingresar=DB::insert('insert into clientes (id_cliente, fecha_registro, nombre_completo, telefono,correo_electronico, id_sucursal, cliente_habitual) values( ?, ?, ?, ?, ?, ?, ?)', [null,$fecha,$nombre_cliente, $telefono, $correo, $sucursal, $cliente_habitual]);
         
         //INSERT INTO clientes(id_cliente, fecha_registro, nombre_completo, telefono,correo_electronico, id_sucursal, cliente_habitual) VALUES (1, '12/04/2021', 'Maximiliano Gabriel', '123456','max@gmail.com',2,1);
 

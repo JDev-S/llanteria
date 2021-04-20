@@ -41,7 +41,7 @@ class BateriasController extends Controller
             $file->move(public_path().'/img/',$name);
             $fotografia_miniatura=$name;
             
-             $ingresar=DB::select('call insertar_producto_universal(?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ? )',[13,$nombre_bateria,$precio,2,$marca,$fotografia_miniatura,$modelo,'','','','',$voltaje,$capacidad_arranque,$capacidad_arranque_frio,$medidas,$peso,$tamanio]);
+             $ingresar=DB::select('call insertar_producto_universal(?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ? )',[7,$nombre_bateria,$precio,2,$marca,$fotografia_miniatura,$modelo,'','','','',$voltaje,$capacidad_arranque,$capacidad_arranque_frio,$medidas,$peso,$tamanio]);
             //call insertar_producto_universal(11,'bateria nuevas',200.00,2,1,'fotos','bateriabb','','','','','a','b','c','d','e','f')
         }
        

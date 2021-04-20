@@ -39,7 +39,7 @@ class LlantasController extends Controller
             $file->move(public_path().'/img/',$name);
             $fotografia_miniatura=$name;
             
-             $ingresar=DB::select('call insertar_producto_universal(?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ? )',[9,$nombre_llanta,$precio,1,$marca,$fotografia_miniatura,$modelo,$medida,$capacidad_carga,$indice_velocidad,$numero_rin,'','','','','','']);
+             $ingresar=DB::select('call insertar_producto_universal(?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ? )',[11,$nombre_llanta,$precio,1,$marca,$fotografia_miniatura,$modelo,$medida,$capacidad_carga,$indice_velocidad,$numero_rin,'','','','','','']);
             //call insertar_producto_universal(8,'llantas nuevas',200.00,1,1,'fotos','llantita','a','b','c','d','','','','','','')
             //return redirect()->action('AlimentosController@alimentos_mostrar')->withInput();
         }

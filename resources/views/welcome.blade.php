@@ -78,8 +78,8 @@
                 <i class="icon md-more" aria-hidden="true"></i>
             </button>
             <div class="navbar-brand navbar-brand-center site-gridmenu-toggle" data-toggle="gridmenu">
-                <img class="navbar-brand-logo" src="assets\images\logo.png" title="Remark">
-                <span class="navbar-brand-text hidden-xs-down"> Remark</span>
+                <img class="navbar-brand-logo" src="assets\images\logo.png" title="Llantimax">
+                <span class="navbar-brand-text hidden-xs-down"> Llantimax</span>
             </div>
             <button type="button" class="navbar-toggler collapsed" data-target="#site-navbar-search" data-toggle="collapse">
                 <span class="sr-only">Toggle Search</span>
@@ -200,7 +200,7 @@
                                         <span class="site-menu-title">Agregar Clientes</span>
                                     </a>
                                 </li>
-                                <li class="site-menu-item">
+                                <!--<li class="site-menu-item">
                                     <a href="uikit\dropdowns.html">
                                         <span class="site-menu-title">Dropdowns</span>
                                     </a>
@@ -264,7 +264,7 @@
                                     <a href="uikit\utilities.html">
                                         <span class="site-menu-title">Utilties</span>
                                     </a>
-                                </li>
+                                </li>-->
                             </ul>
                         </li>
                         <!--  -->
@@ -289,7 +289,7 @@
                                         <span class="site-menu-title">Agregar producto a Inventario</span>
                                     </a>
                                 </li>
-                                <li class="site-menu-item">
+                                <!--<li class="site-menu-item">
                                     <a href="uikit\dropdowns.html">
                                         <span class="site-menu-title">Dropdowns</span>
                                     </a>
@@ -353,7 +353,7 @@
                                     <a href="uikit\utilities.html">
                                         <span class="site-menu-title">Utilties</span>
                                     </a>
-                                </li>
+                                </li>-->
                             </ul>
                         </li>
                         <li class="site-menu-item has-sub">
@@ -376,7 +376,7 @@
                                     </a>
                                 </li>
 
-                                <li class="site-menu-item">
+                                <!--<li class="site-menu-item">
                                     <a href="advanced\lightbox.html">
                                         <span class="site-menu-title">Lightbox</span>
                                     </a>
@@ -435,7 +435,7 @@
                                     <a href="advanced\bootbox-sweetalert.html">
                                         <span class="site-menu-title">Bootbox &amp; Sweetalert</span>
                                     </a>
-                                </li>
+                                </li>-->
                             </ul>
                         </li>
                         <li class="site-menu-item has-sub">
@@ -455,7 +455,7 @@
                                         <span class="site-menu-title">Agregar refacciones</span>
                                     </a>
                                 </li>
-                                <li class="site-menu-item">
+                                <!--<li class="site-menu-item">
                                     <a href="structure\pricing-tables.html">
                                         <span class="site-menu-title">Pricing Tables</span>
                                     </a>
@@ -529,7 +529,7 @@
                                     <a href="structure\breadcrumbs.html">
                                         <span class="site-menu-title">Breadcrumbs</span>
                                     </a>
-                                </li>
+                                </li>-->
                             </ul>
                         </li>
                         <li class="site-menu-item has-sub">
@@ -549,7 +549,7 @@
                                         <span class="site-menu-title">Agregar llantas</span>
                                     </a>
                                 </li>
-                                <li class="site-menu-item">
+                                <!--<li class="site-menu-item">
                                     <a href="widgets\blog.html">
                                         <span class="site-menu-title">Blog Widgets</span>
                                     </a>
@@ -568,7 +568,7 @@
                                     <a href="widgets\weather.html">
                                         <span class="site-menu-title">Weather Widgets</span>
                                     </a>
-                                </li>
+                                </li>-->
                             </ul>
                         </li>
                         <li class="site-menu-item has-sub">
@@ -588,7 +588,7 @@
                                         <span class="site-menu-title">Agregar baterias</span>
                                     </a>
                                 </li>
-                                <li class="site-menu-item">
+                                <!--<li class="site-menu-item">
                                     <a href="forms\advanced.html">
                                         <span class="site-menu-title">Advanced Elements</span>
                                     </a>
@@ -645,10 +645,10 @@
                                     <a href="forms\file-uploads.html">
                                         <span class="site-menu-title">File Uploads</span>
                                     </a>
-                                </li>
+                                </li>-->
                             </ul>
                         </li>
-                        <li class="site-menu-item has-sub">
+                        <!--<li class="site-menu-item has-sub">
                             <a href="javascript:void(0)">
                                 <i class="site-menu-icon md-border-all" aria-hidden="true"></i>
                                 <span class="site-menu-title">Tables</span>
@@ -706,8 +706,8 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
-                        <li class="site-menu-item has-sub">
+                        </li>-->
+                       <!-- <li class="site-menu-item has-sub">
                             <a href="javascript:void(0)">
                                 <i class="site-menu-icon md-chart" aria-hidden="true"></i>
                                 <span class="site-menu-title">Chart</span>
@@ -765,7 +765,7 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
+                        </li>-->
 
                         <!-- -->
                     <li class="site-menu-category">Ventas</li>
