@@ -60,7 +60,7 @@
                         <select class="form-control" id="validationCustom22" required name="producto">
 
                             @foreach($data3 as $item3)
-                            <option value="{{ $item3->id_productos_llantimax }}"> {{ $item3->nombre }} </option>
+                            <option value="{{ $item3->id_productos_llantimax }} "> {{ $item3->nombre }} </option>
 
                             @endforeach
 

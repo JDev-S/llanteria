@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Connection;
+use App\Http\Controllers\BateriasController;
 use DB;
 
 class ServicioController extends Controller
@@ -22,7 +23,8 @@ class ServicioController extends Controller
         $descripcion = $input['descripcion'];
       //echo $nombre_servicio."    ".$precio."     ".$descripcion;
        //return redirect()->back();
-        $ingresar=DB::select('call insertar_servicio_universal(?, ?, ?, ?)',[5,$nombre_servicio,$precio,$descripcion]);
+        $id_producto=ServicioController::generar_cadena_aleatoria();//(new BateriasController)->generar_cadena_aleatoria();////app(BateriasController:class)->generar_cadena_aleatoria();
+        $ingresar=DB::select('call insertar_servicio_universal(?, ?, ?, ?)',[$id_producto,$nombre_servicio,$precio,$descripcion]);
         
         //CALL insertar_servicio_universal (1,'alineación', 8000.00, 'alineación', 'se hacen un montón de cosas')
          return redirect()->action('ServicioController@mostrar_servicios')->withInput();
@@ -31,5 +33,27 @@ class ServicioController extends Controller
     public function mostrar_formulario()
     {
         return view('/principal/servicios/agregar');
+    }
+    
+    function  generar_cadena_aleatoria($longitud = 8) 
+    {
+        $caracteres_permitidos = '0123456789abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $longitud_caracteres = strlen($caracteres_permitidos);
+        $cadena_random = '';
+        
+        for($i = 0; $i < $longitud; $i++) {
+            $caracter_random = $caracteres_permitidos[mt_rand(0, $longitud_caracteres - 1)];
+            $cadena_random .= $caracter_random;
+        }
+        
+        /*OBTENER EL NÚMERO DE REGISTROS ACTUAL DE VENTAS*/
+        try{
+            $query = DB::select('select count(*) as productos from productos_llantimax');    
+        } catch(Exception $e){
+            echo 'Ha ocurrido un error!';
+        }
+        $ventas_actuales = $query[0]->productos;
+        
+        return $cadena_random."".($ventas_actuales+1);
     }
 }

@@ -108,6 +108,10 @@ Route::post('/agregar_baterias', 'BateriasController@agregar_bateria')->name('ag
 
 /*  Ventas*/
 /* Vista para hacer la venta */
+/*Mostrar ventas*/
+Route::get('/mostrar_venta','VentasController@mostrar_ventas_realizadas')->middleware('admin:1')->name('mostrar_venta');
+/*Mostrar Formulario de generar venta*/
 Route::get('/agregar_venta','VentasController@mostrar_productos_ventas')->middleware('admin:1')->name('agregar_venta');
 
 Route::post('/insertar_venta', 'VentasController@insertar_venta')->name('insertar_venta');
+

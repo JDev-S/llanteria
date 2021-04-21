@@ -3,10 +3,10 @@
 <!-- Page -->
 <div class="page">
     <div class="page-header">
-        <h1 class="page-title">Inventariado</h1>
+        <h1 class="page-title">Ventas</h1>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/principal">Inicio</a></li>
-            <!--<li class="breadcrumb-item"><a href="javascript:void(0)"></a></li>-->
+            <li class="breadcrumb-item"><a href="javascript:void(0)">Ventas realizadas</a></li>
             <!--<li class="breadcrumb-item active"></li>-->
         </ol>
 
@@ -23,59 +23,29 @@
                 <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                     <thead>
                         <tr>
-                            <th>Id_Producto</th>
-                            <th>Nombre del producto</th>
-                            <th>Categoria</th>
-                            <th>Marca</th>
-                            <th>Modelo</th>
-                            <th>Precio</th>
-                            <th>Foto</th>
-                            <!--<th>Sucursal</th>-->
-                            <th>Cantidad</th>
+                            <th>Folio de la venta</th>
+                            <th>Vendedor</th>
+                            <th>Sucursal</th>
+                            <th>Cliente</th>
+                            <th>Total de la venta</th>
+                            <th>Método de pago</th>
+                            <th>Fecha de la venta</th>
+                            
 
                         </tr>
                     </thead>
-                   
+
                     <tbody>
-                        @foreach($aProducto_refaccion as $refaccion)
+                        @foreach($ventas as $venta)
                         <tr>
-                            <td>{{$refaccion-> id_productos_llantimax}}</td>
-                            <td>{{$refaccion-> nombre}}</td>
-                            <td>{{$refaccion-> categoria}}</td>
-                            <td>{{$refaccion-> marca}}</td>
-                             <td>{{$refaccion-> modelo}}</td>
-                            <td>{{$refaccion-> precio}}</td>
-                            <td><img src="/img/{{$refaccion->fotografia_miniatura}}" width="80px" height="80px" alt="{{$refaccion-> nombre}}"></td>
+                            <td>{{$venta-> id_venta}}</td>
+                            <td>{{$venta-> vendedor}}</td>
+                            <td>{{$venta-> sucursal}}</td>
+                            <td>{{$venta-> cliente}}</td>
+                            <td>{{$venta-> total_venta}}</td>
+                            <td>{{$venta-> metodo_pago}}</td>
+                            <td>{{$venta-> fecha_venta}}</td>
                             
-                            <td>{{$refaccion-> cantidad}}</td>
-                        </tr>
-                        @endforeach
-                        
-                        @foreach($aProducto_llanta as $llanta)
-                        <tr>
-                        <td>{{$llanta-> id_productos_llantimax}}</td>
-                            <td>{{$llanta-> nombre}}</td>
-                            <td>{{$llanta-> categoria}}</td>
-                            <td>{{$llanta-> marca}}</td>
-                             <td>{{$llanta-> modelo}}</td>
-                            <td>{{$llanta-> precio}}</td>
-                            <td><img src="/img/{{$llanta->fotografia_miniatura}}" width="80px" height="80px" alt="{{$llanta-> nombre}}"></td>
-                            
-                            <td>{{$llanta-> cantidad}}</td>
-                        </tr>
-                        @endforeach
-                        
-                        @foreach($aProducto_bateria as $bateria)
-                        <tr>
-                        <td>{{$bateria-> id_productos_llantimax}}</td>
-                            <td>{{$bateria-> nombre}}</td>
-                            <td>{{$bateria-> categoria}}</td>
-                            <td>{{$bateria-> marca}}</td>
-                             <td>{{$bateria-> modelo}}</td>
-                            <td>{{$bateria-> precio}}</td>
-                            <td><img src="/img/{{$bateria->fotografia_miniatura}}" width="80px" height="80px" alt="{{$bateria-> nombre}}"></td>
-                            
-                            <td>{{$llanta-> cantidad}}</td>
                         </tr>
                         @endforeach
                     </tbody>

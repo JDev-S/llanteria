@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Connection;
 use DB;
 class VentasController extends Controller
@@ -24,16 +26,16 @@ select inventario.id_producto as id_producto, productos_llantimax.nombre as nomb
    public function insertar_venta(Request $input)
 	{
         /*RECUPERAR DATOS PARA LA VENTA*/
-        $id_usuario = 1;//session
-        $id_sucursal_usuario = 1;//session
-        $id_sucursal = 1;//session
+        $id_usuario = session('id_usuario');//session
+        $id_sucursal_usuario = session('id_sucursal_usuario');//session
+        $id_sucursal =session('id_sucursal_usuario');
        
         $id_cliente = $input ['id_cliente'];
         $id_metodo_pago = $input ['id_metodo_pago'];
-        //$total_venta = $input ['total_venta'];
+        $total_venta = $input ['total_venta'];
         $factura = $input['factura'];
         $array_productos=$input['array_productos'];
-        $array_lista_productos = VentasController::array_productos($array_productos);
+        //$array_lista_productos = VentasController::array_productos($array_productos);
        
        //foreach($array_productos as $producto){
            
@@ -85,9 +87,10 @@ select inventario.id_producto as id_producto, productos_llantimax.nombre as nomb
             $ingresar = DB::insert('INSERT INTO venta(id_venta, id_usuario, id_sucursal_usuario, id_sucursal, id_cliente, id_sucursal_cliente, id_metodo_pago, total_venta, fecha_venta, factura) VALUES(?,?,?,?,?,?,?,?,?,?)', [$id_venta, $id_usuario, $id_sucursal_usuario, $id_sucursal, $id_cliente, $id_sucursal_cliente, $id_metodo_pago, $total_venta, $fecha_venta, $factura]);
        
             /*INSERTAR DETALLE DE LA VENTA*/
-            foreach($array_lista_productos as $propiedad){
+            foreach($array_productos as $propiedad){
                 $ingresar = DB::insert('INSERT INTO detalle_venta (id_venta, id_usuario, id_sucursal_usuario, id_sucursal, id_producto, cantidad_producto, total, precio_unidad) VALUES (?,?,?,?,?,?,?,?)', [$id_venta, $id_usuario, $id_sucursal_usuario, $id_sucursal, $propiedad['id_producto'], $propiedad['cantidad_producto'] , $propiedad['total'] , $propiedad['precio_unidad']]);
             }
+            echo 'Venta realizada';
             DB::commit();
         }catch (Exception $e){
                 echo 'Ha ocurrido un error!';
@@ -143,7 +146,14 @@ select inventario.id_producto as id_producto, productos_llantimax.nombre as nomb
         return $id_sucursal_cliente = $consulta[0]->id_sucursal;
     }
     
-    function array_productos($array_productos)
+    public function mostrar_ventas_realizadas()
+    {
+        $ventas=DB::select("select venta.id_venta, (select DISTINCT usuario.nombre_completo from venta inner join usuario on usuario.id_usuario=venta.id_usuario and usuario.id_sucursal=venta.id_sucursal_usuario) as vendedor, sucursal.sucursal, clientes.nombre_completo as cliente, venta.total_venta, metodo_pago.metodo_pago, venta.fecha_venta, venta.factura from venta inner join usuario on usuario.id_usuario=venta.id_usuario and usuario.id_sucursal=venta.id_sucursal_usuario INNER JOIN sucursal on sucursal.id_sucursal=venta.id_sucursal INNER JOIN clientes on venta.id_cliente=clientes.id_cliente and venta.id_sucursal_cliente=clientes.id_sucursal inner join metodo_pago on venta.id_metodo_pago=metodo_pago.id_metodo_pago");
+             
+		return view('/principal/ventas/index',compact('ventas'));
+    }
+    
+   /* function array_productos($array_productos)
     {
         $array_lista_productos = array();
         foreach($array_productos as $producto){
@@ -168,6 +178,6 @@ select inventario.id_producto as id_producto, productos_llantimax.nombre as nomb
         }
          die();
         //return $array_lista_productos;
-    }
+    }*/
         
 }

@@ -776,7 +776,13 @@
                                 <span class="site-menu-arrow"></span>
                             </a>
                             <ul class="site-menu-sub">
-
+                                
+                                <li class="site-menu-item">
+                                    <a href="/mostrar_venta">
+                                        <span class="site-menu-title">Mostrar ventas</span>
+                                    </a>
+                                </li>
+                                
                                 <li class="site-menu-item">
                                     <a href="/agregar_venta">
                                         <span class="site-menu-title">Generar venta</span>

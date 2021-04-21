@@ -204,31 +204,84 @@
         // Inserta una fila en la tabla, en el índice 0
         var fila = document.getElementById("cantidad").innerHTML;
         var nueva_fila = parseInt(fila) + 1;
-        //document.getElementById("cantidad").innerHTML="";
         document.getElementById("cantidad").innerHTML = nueva_fila;
-        document.getElementById("productos").insertRow(fila).innerHTML = '<tr>' +
-            '<td>' + id_producto + '</td>' +
-            '<td>' + nombre + '</td>' +
-            '<td>' + precio + '</td>' +
-            '<td>' + id_sucursal + '</td>' +
-            '<td><input type="button" value="Delete" onclick="borrar_formulario(this)"/></td>' +
-            '</tr>';
-        total = total + parseInt(precio);
-        var producto = {
-            "id_producto": id_producto,
-            "cantidad_producto": 1,
-            "precio_unidad": precio,
-            "total": 1 * parseInt(precio)
-        };
+        var bandera=0;
 
-        productos.push(producto);
+        if (productos.length < 1) {
+            alert("No hay se va a  ingresar");
+            document.getElementById("productos").insertRow(fila).innerHTML = '<tr>' +
+                '<td>' + id_producto + '</td>' +
+                '<td>' + nombre + '</td>' +
+                '<td>' + precio + '</td>' +
+                '<td>' + id_sucursal + '</td>' +
+                '<td><input type="button" value="Delete" onclick="borrar_formulario(this)"/></td>' +
+                '</tr>';
+            total = total + parseInt(precio);
+            var producto = {
+                "id_producto": id_producto,
+                "cantidad_producto": 1,
+                "precio_unidad": precio,
+                "total": 1 * parseInt(precio)
+            };
+
+            productos.push(producto);
+        } else {
+            for (var i = 0; i < productos.length; i++) {
+                console.log(productos[i]);
+                if (productos[i]['id_producto'] == id_producto) {
+                    var cantidad=0;
+                    var total_producto=0;
+                    alert("es repetido");
+                     cantidad= parseInt(productos[i]['cantidad_producto'])+1;
+                    total_producto=parseInt(productos[i]['precio_unidad'])*cantidad;
+                    productos[i]['cantidad_producto']=cantidad;
+                    productos[i]['total']=total_producto;
+                    bandera=1;
+                }
+                else{
+                    console.log("no hay repetido"+"ASI ESTA QUEDANDO LA INFO");
+                    console.log(productos);
+                    
+                }
+            }
+            if(bandera==1)
+               {
+                   document.getElementById("productos").insertRow(fila).innerHTML = '<tr>' +
+                        '<td>' + id_producto + '</td>' +
+                        '<td>' + nombre + '</td>' +
+                        '<td>' + precio + '</td>' +
+                        '<td>' + id_sucursal + '</td>' +
+                        '<td><input type="button" value="Delete" onclick="borrar_formulario(this)"/></td>' +
+                        '</tr>';
+               }
+            else{
+                        document.getElementById("productos").insertRow(fila).innerHTML = '<tr>' +
+                        '<td>' + id_producto + '</td>' +
+                        '<td>' + nombre + '</td>' +
+                        '<td>' + precio + '</td>' +
+                        '<td>' + id_sucursal + '</td>' +
+                        '<td><input type="button" value="Delete" onclick="borrar_formulario(this)"/></td>' +
+                        '</tr>';
+                    total = total + parseInt(precio);
+                    var producto = {
+                        "id_producto": id_producto,
+                        "cantidad_producto": 1,
+                        "precio_unidad": precio,
+                        "total": 1 * parseInt(precio)
+                    };
+
+                    productos.push(producto);
+            }
+                           
+        }
+
     }
 
     function generar_venta() {
         id_cliente = "";
         factura = "";
         id_metodo_pago = "";
-        alert("venta");
+        alert("Generando venta");
         console.log(productos);
         var cliente = document.getElementById('id_cliente');
         var pago = document.getElementById('id_metodo_pago');
@@ -243,14 +296,19 @@
             }
 
         }
+        var total_venta=0;
+        for(var t=0;t<productos.length;t++)
+            {
+                total_venta+=parseInt(productos[t]['total']);
+            }
 
         var token = '{{csrf_token()}}';
         var data = {
             id_cliente: id_cliente,
             id_metodo_pago: id_metodo_pago,
-            total_venta: total,
+            total_venta: total_venta,
             factura: factura,
-            array_productos:productos,
+            array_productos: productos,
             _token: token
         };
 
@@ -259,7 +317,7 @@
             url: "/insertar_venta",
             data: data,
             success: function(msg) {
-                alert(msg );
+                alert(msg);
             }
         });
     }
