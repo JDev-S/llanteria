@@ -23,53 +23,109 @@
                 <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                     <thead>
                         <tr>
-                            <th>Id_bateria</th>
-                            <th>Nombre de la bateria</th>
-                            <th>Marca</th>
+                            <th>Id_Producto</th>
+                            <th>Nombre del producto</th>
                             <th>Categoria</th>
-                            <th>Caracteristica</th>
-                            <th>Descripción</th>
-                            <th>Foto</th>
+                            <th>Marca</th>
+                            <th>Modelo</th>
                             <th>Precio</th>
+                            <th>Foto</th>
+                            <th>Sucursal</th>
+                            <th>Cantidad</th>
 
                         </tr>
                     </thead>
                    
                     <tbody>
-                        @foreach($baterias as $bateria)
+                       @foreach($aProducto_baterias as $bateria)
                         <tr>
-                            <td>{{$bateria-> id_llanta}}</td>
-                            <td>{{$bateria-> nombre_bateria}}</td>
-                            <td>{{$bateria-> marca}}</td>
+                            <td><button class="btn btn-primary" data-target="#modalBateria_{{$bateria-> id_productos_llantimax}}_{{$bateria-> sucursal}}" data-toggle="modal" type="button">{{$bateria-> id_productos_llantimax}}</button></td>
+                            <td>{{$bateria-> nombre}}</td>
                             <td>{{$bateria-> categoria}}</td>
-                             <td>{{$bateria-> caracteristica}}</td>
-                            <td>{{$bateria-> descripcion}}</td>
-                            <td><img src="/img/{{$bateria->foto}}" width="80px" height="80px" alt="{{$bateria-> nombre_bateria}}"></td>
+                            <td>{{$bateria-> marca}}</td>
+                            <td>{{$bateria-> modelo}}</td>
                             <td>{{$bateria-> precio}}</td>
-                            
+                            <td><img src="/img/{{$bateria->fotografia_miniatura}}" width="80px" height="80px" alt="{{$bateria-> nombre}}"></td>
+                            <td>{{$bateria-> sucursal}}</td>
+                            <td>{{$bateria-> cantidad}}</td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
-        <!-- End Panel Basic -->
+ <!--MODAL BATERIAS-->
+        @foreach($aProducto_baterias as $bateria)
+        <div class="modal fade" id="modalBateria_{{$bateria-> id_productos_llantimax}}_{{$bateria-> sucursal}}" aria-hidden="true" aria-labelledby="modalBateria_{{$bateria-> id_productos_llantimax}}_{{$bateria-> sucursal}}" role="dialog" tabindex="-1">
+            <div class="modal-dialog modal-simple">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title">Información de la batería</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="example-grid">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="example-col"><img src="/img/{{$bateria->fotografia_miniatura}}" width="80px" height="80px" alt="{{$bateria-> nombre}}"> </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="example-col">Nombre de la Bateria: {{$bateria-> nombre}}</div>
+                                </div>
+                            </div>
 
-        <!-- Panel Table Individual column searching -->
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="example-col">Marca: {{$bateria-> marca}}</div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="example-col">Modelo: {{$bateria-> modelo}}</div>
+                                </div>
+                            </div>
 
-        <!-- End Panel Table Individual column searching -->
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="example-col">Medida de la bateria: {{$bateria->medidas}}</div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="example-col">Voltaje: {{$bateria->voltaje}}</div>
+                                </div>
+                            </div>
 
-        <!-- Panel Table Tools -->
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="example-col">Capacidad de arranque: {{$bateria->capacidad_arranque}}</div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="example-col">Capacidad de arranque de frío: {{$bateria->capacidad_arranque_frio}}</div>
+                                </div>
+                            </div>
 
-        <!-- End Panel Table Tools -->
-
-        <!-- Panel Table Add Row -->
-
-        <!-- End Panel Table Add Row -->
-
-        <!-- Panel FixedHeader -->
-
-        <!-- End Panel FixedHeader -->
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="example-col">Peso: {{$bateria-> peso}}</div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="example-col">Tamaño: {{$bateria->tamanio}}</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="example-col">Sucursal: {{$bateria-> sucursal}}</div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="example-col">Precio: {{$bateria-> precio}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endforeach
+        <!--FIN MODAL BATERIAS-->
 
     </div>
 </div>

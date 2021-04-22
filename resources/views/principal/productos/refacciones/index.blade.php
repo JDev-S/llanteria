@@ -53,23 +53,7 @@
                 </table>
             </div>
         </div>
-        <!-- End Panel Basic -->
 
-        <!-- Panel Table Individual column searching -->
-
-        <!-- End Panel Table Individual column searching -->
-
-        <!-- Panel Table Tools -->
-
-        <!-- End Panel Table Tools -->
-
-        <!-- Panel Table Add Row -->
-
-        <!-- End Panel Table Add Row -->
-
-        <!-- Panel FixedHeader -->
-
-        <!-- End Panel FixedHeader -->
 
     </div>
 </div>

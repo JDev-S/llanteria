@@ -23,53 +23,98 @@
                 <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                     <thead>
                         <tr>
-                            <th>Id_llanta</th>
-                            <th>Nombre de la llanta</th>
-                            <th>Marca</th>
+                            <th>Id_Producto</th>
+                            <th>Nombre del producto</th>
                             <th>Categoria</th>
-                            <th>Caracteristica</th>
-                            <th>Descripción</th>
-                            <th>Foto</th>
+                            <th>Marca</th>
+                            <th>Modelo</th>
                             <th>Precio</th>
-
+                            <th>Foto</th>
+                            <th>Sucursal</th>
                         </tr>
                     </thead>
-                   
+
                     <tbody>
-                        @foreach($llantas as $llanta)
+                        @foreach($aProducto_llantas as $llanta)
                         <tr>
-                            <td>{{$llanta-> id_llanta}}</td>
-                            <td>{{$llanta-> nombre_llanta}}</td>
-                            <td>{{$llanta-> marca}}</td>
+                            <td><button class="btn btn-primary" data-target="#modalLlanta_{{$llanta-> id_productos_llantimax}}_{{$llanta-> sucursal}}" data-toggle="modal" type="button">{{$llanta-> id_productos_llantimax}}</button></td>
+                            <td>{{$llanta-> nombre}}</td>
                             <td>{{$llanta-> categoria}}</td>
-                             <td>{{$llanta-> caracteristica}}</td>
-                            <td>{{$llanta-> descripcion}}</td>
-                            <td><img src="/img/{{$llanta->foto}}" width="80px" height="80px" alt="{{$llanta-> nombre_llanta}}"></td>
+                            <td>{{$llanta-> marca}}</td>
+                            <td>{{$llanta-> modelo}}</td>
                             <td>{{$llanta-> precio}}</td>
-                            
+                            <td><img src="/img/{{$llanta->fotografia_miniatura}}" width="80px" height="80px" alt="{{$llanta-> nombre}}"></td>
+                            <td>{{$llanta-> sucursal}}</td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
-        <!-- End Panel Basic -->
+        <!--MODAL DE LLANTAS-->
+        @foreach($aProducto_llantas as $llanta)
+        <div class="modal fade" id="modalLlanta_{{$llanta-> id_productos_llantimax}}_{{$llanta-> sucursal}}" aria-hidden="true" aria-labelledby="modalLlanta_{{$llanta-> id_productos_llantimax}}_{{$llanta-> sucursal}}" role="dialog" tabindex="-1">
+            <div class="modal-dialog modal-simple">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title">Información de la llanta</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="example-grid">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="example-col"><img src="/img/{{$llanta->fotografia_miniatura}}" width="80px" height="80px" alt="{{$llanta-> nombre}}"> </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="example-col">Nombre de la llanta: {{$llanta-> nombre}}</div>
+                                </div>
+                            </div>
 
-        <!-- Panel Table Individual column searching -->
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="example-col">Marca: {{$llanta-> marca}}</div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="example-col">Modelo: {{$llanta-> modelo}}</div>
+                                </div>
+                            </div>
 
-        <!-- End Panel Table Individual column searching -->
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="example-col">Medida de la llanta: {{$llanta->medida}}</div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="example-col">Capacidad de carga: {{$llanta->capacidad_carga}}</div>
+                                </div>
+                            </div>
 
-        <!-- Panel Table Tools -->
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="example-col">Indice de velocidad: {{$llanta->indice_velocidad}}</div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="example-col">Número de rin: {{$llanta->numero_rin}}</div>
+                                </div>
+                            </div>
 
-        <!-- End Panel Table Tools -->
-
-        <!-- Panel Table Add Row -->
-
-        <!-- End Panel Table Add Row -->
-
-        <!-- Panel FixedHeader -->
-
-        <!-- End Panel FixedHeader -->
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="example-col">Sucursal: {{$llanta-> sucursal}}</div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="example-col">Precio: {{$llanta-> precio}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endforeach
+        <!--FIN MODAL LLANTAS-->
 
     </div>
 </div>

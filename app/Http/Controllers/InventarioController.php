@@ -9,18 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use DB;
 class InventarioController extends Controller
 {
-    
-      /*public function mostrar_inventarios ()
-    {
-        
-        $inventarios=DB::select("select * from ((SELECT productos_llantimax.id_productos_llantimax, categoria.categoria, productos_llantimax.nombre as nombre_producto, marca.marca, producto.modelo, productos_servicios.precio, producto.fotografia_miniatura as foto, caracteristica.caracteristica, descripcion_categoria_caracteristica.descripcion FROM productos_llantimax inner join productos_servicios on productos_servicios.id_producto_servicio=productos_llantimax.id_productos_llantimax inner join producto on producto.id_producto=productos_servicios.id_producto_servicio INNER JOIN categoria on categoria.id_categoria=producto.id_categoria INNER JOIN caracteristica on categoria.id_categoria=caracteristica.id_categoria left join descripcion_categoria_caracteristica on descripcion_categoria_caracteristica.id_producto_descripcion=producto.id_producto and descripcion_categoria_caracteristica.id_categoria=caracteristica.id_categoria and descripcion_categoria_caracteristica.id_caracteristica=caracteristica.id_caracteristica inner join marca on marca.id_marca=producto.id_marca)
 
-UNION
-
-(SELECT productos_llantimax.id_productos_llantimax, (select 'Refacción') as categoria, productos_llantimax.nombre as nombre_producto, productos_independientes.marca, productos_independientes.modelo, productos_independientes.precio, productos_independientes.fotografia_miniatura as foto, (select 'Descripción') as caracteristica, productos_independientes.descripcion from productos_llantimax INNER join productos_independientes on productos_llantimax.id_productos_llantimax=productos_independientes.id_producto_independiente))as t1 left join inventario on t1.id_productos_llantimax=inventario.id_producto left join sucursal on sucursal.id_sucursal=inventario.id_sucursal ORDER BY t1.id_productos_llantimax");
-             
-		return view('/principal/inventario/index',compact('inventarios'));
-    }*/
     
     
      public function agregar_inventario(Request $input)
@@ -48,14 +37,20 @@ UNION
          $aProducto_refaccion = array();
          $id_sucursal=session('id_sucursal_usuario');
          
+        /*$productos_sucursal = DB::select('select id_productos_llantimax, categoria, nombre, marca, modelo, precio, fotografia_miniatura, caracteristica, descripcion, sucursal, cantidad from ((SELECT productos_llantimax.id_productos_llantimax, categoria.categoria, productos_llantimax.nombre, marca.marca, producto.modelo, productos_servicios.precio, producto.fotografia_miniatura, caracteristica.caracteristica, IFNULL(descripcion_categoria_caracteristica.descripcion, "") as descripcion FROM productos_llantimax inner join productos_servicios on productos_servicios.id_producto_servicio=productos_llantimax.id_productos_llantimax inner join producto on producto.id_producto=productos_servicios.id_producto_servicio INNER JOIN categoria on categoria.id_categoria=producto.id_categoria INNER JOIN caracteristica on categoria.id_categoria=caracteristica.id_categoria left join descripcion_categoria_caracteristica on descripcion_categoria_caracteristica.id_producto_descripcion=producto.id_producto and descripcion_categoria_caracteristica.id_categoria=caracteristica.id_categoria and descripcion_categoria_caracteristica.id_caracteristica=caracteristica.id_caracteristica inner join marca on marca.id_marca=producto.id_marca)
+
+        UNION
+
+        (SELECT productos_llantimax.id_productos_llantimax, (select "Refacción") as categoria, productos_llantimax.nombre, productos_independientes.marca, productos_independientes.modelo, productos_independientes.precio, productos_independientes.fotografia_miniatura, (select "Descripción") as caracteristica, IFNULL(productos_independientes.descripcion,"") as descripcion from productos_llantimax INNER join productos_independientes on productos_llantimax.id_productos_llantimax=productos_independientes.id_producto_independiente))as t1 left join inventario on t1.id_productos_llantimax=inventario.id_producto left join sucursal on sucursal.id_sucursal=inventario.id_sucursal where inventario.id_sucursal='.$id_sucursal.' ORDER BY t1.id_productos_llantimax');*/
+        
         $productos = DB::select('select id_productos_llantimax, categoria, nombre, marca, modelo, precio, fotografia_miniatura, caracteristica, descripcion, sucursal, cantidad from ((SELECT productos_llantimax.id_productos_llantimax, categoria.categoria, productos_llantimax.nombre, marca.marca, producto.modelo, productos_servicios.precio, producto.fotografia_miniatura, caracteristica.caracteristica, IFNULL(descripcion_categoria_caracteristica.descripcion, "") as descripcion FROM productos_llantimax inner join productos_servicios on productos_servicios.id_producto_servicio=productos_llantimax.id_productos_llantimax inner join producto on producto.id_producto=productos_servicios.id_producto_servicio INNER JOIN categoria on categoria.id_categoria=producto.id_categoria INNER JOIN caracteristica on categoria.id_categoria=caracteristica.id_categoria left join descripcion_categoria_caracteristica on descripcion_categoria_caracteristica.id_producto_descripcion=producto.id_producto and descripcion_categoria_caracteristica.id_categoria=caracteristica.id_categoria and descripcion_categoria_caracteristica.id_caracteristica=caracteristica.id_caracteristica inner join marca on marca.id_marca=producto.id_marca)
 
         UNION
 
-        (SELECT productos_llantimax.id_productos_llantimax, (select "Refacción") as categoria, productos_llantimax.nombre, productos_independientes.marca, productos_independientes.modelo, productos_independientes.precio, productos_independientes.fotografia_miniatura, (select "Descripción") as caracteristica, IFNULL(productos_independientes.descripcion,"") as descripcion from productos_llantimax INNER join productos_independientes on productos_llantimax.id_productos_llantimax=productos_independientes.id_producto_independiente))as t1 left join inventario on t1.id_productos_llantimax=inventario.id_producto left join sucursal on sucursal.id_sucursal=inventario.id_sucursal where inventario.id_sucursal='.$id_sucursal.' ORDER BY t1.id_productos_llantimax');
-         
+        (SELECT productos_llantimax.id_productos_llantimax, (select "Refacción") as categoria, productos_llantimax.nombre, productos_independientes.marca, productos_independientes.modelo, productos_independientes.precio, productos_independientes.fotografia_miniatura, (select "Descripción") as caracteristica, IFNULL(productos_independientes.descripcion,"") as descripcion from productos_llantimax INNER join productos_independientes on productos_llantimax.id_productos_llantimax=productos_independientes.id_producto_independiente))as t1 left join inventario on t1.id_productos_llantimax=inventario.id_producto left join sucursal on sucursal.id_sucursal=inventario.id_sucursal ORDER BY t1.id_productos_llantimax and sucursal.id_sucursal');
+        
          //var_dump($productos);
-        // die();
+         //die();
          
          $oProducto_llanta = new \stdClass();
          $oProducto_refaccion = new \stdClass();
@@ -83,8 +78,9 @@ UNION
                if($producto->id_productos_llantimax!==$auxId_producto && $auxId_producto!==-1)
               {
                    if($auxCategoria=='Llantas')
-                   {
-                      array_push($aProducto_llanta,$oProducto_llanta);
+                   {    
+                      
+                       array_push($aProducto_llanta,$oProducto_llanta);
                       $oProducto_llanta = new \stdClass();
 
                       $oProducto_llanta->medida = '';
@@ -129,6 +125,7 @@ UNION
                   $oProducto_llanta->precio = $producto->precio;
                   $oProducto_llanta->cantidad = $producto->cantidad;
                   $oProducto_llanta->fotografia_miniatura = $producto->fotografia_miniatura;
+                  //$oProducto_llanta->sucursal=$producto->sucursal;
                   $auxCategoria='Llantas';
 
                   if($producto->caracteristica=='Medida')
@@ -155,13 +152,14 @@ UNION
                              } 
                           }
                       }
-                  }
+                  }    
+                  
               }
               
               if($producto->categoria=='Refacción'){
                   
                   $oProducto_refaccion->id_productos_llantimax = $producto->id_productos_llantimax;
-                  //$oProducto_refaccion->sucursal = $producto->sucursal;
+                  $oProducto_refaccion->sucursal = $producto->sucursal;
                   $oProducto_refaccion->categoria = $producto->categoria;
                   $oProducto_refaccion->nombre = $producto->nombre;
                   $oProducto_refaccion->marca = $producto->marca;
@@ -169,7 +167,7 @@ UNION
                   $oProducto_refaccion->precio = $producto->precio;
                   $oProducto_refaccion->cantidad = $producto->cantidad;
                   $oProducto_refaccion->fotografia_miniatura = $producto->fotografia_miniatura;
-                  
+                  //$oProducto_refaccion->sucursal=$producto->sucursal;
                   $oProducto_refaccion->descripcion = $producto->descripcion;
                   $auxCategoria='Refacción';
               }
@@ -185,6 +183,7 @@ UNION
                   $oProducto_bateria->precio = $producto->precio;
                   $oProducto_bateria->cantidad = $producto->cantidad;
                   $oProducto_bateria->fotografia_miniatura = $producto->fotografia_miniatura;
+                  //$oProducto_bateria->sucursal=$producto->sucursal;
                   $auxCategoria='Bateria';
 
                   if($producto->caracteristica=='Voltaje')
@@ -232,6 +231,7 @@ UNION
               {
                   if($producto->categoria=='Llantas')
                   {
+                     
                        array_push($aProducto_llanta,$oProducto_llanta);
                   }
                   else
@@ -251,22 +251,191 @@ UNION
                   }
               }
           }
-        /* print_r($aProducto_refaccion);
-        echo '<br>';
-        echo '<br>';
-        echo '<br>';
-         print_r($aProducto_llanta);
-        echo '<br>';
-        echo '<br>';
-        echo '<br>';
-         print_r($aProducto_bateria);
-         die();*/
-        
-    
-        
-        return view('/principal/inventario/index',compact('aProducto_bateria','aProducto_llanta','aProducto_refaccion'));
-        
+          //print_r($aProducto_llanta);
+          //echo '<br>';
+          //echo '<br>';
+          //echo '<br>';
+          //print_r($aProducto_bateria);
+          //echo '<br>';
+          //echo '<br>';
+          //echo '<br>';
+         $aProducto_llantas = InventarioController::agregar_sucursales_llanta($aProducto_llanta);
+         //print_r($aProducto_llantas);
+          //echo '<br>';
+          //echo '<br>';
+          //echo '<br>';
+         $aProducto_baterias = InventarioController::agregar_sucursales_bateria($aProducto_bateria);
+        //print_r($aProducto_baterias);
+       
+        return view('/principal/inventario/index',compact('aProducto_baterias','aProducto_llantas','aProducto_refaccion'));  
      }
-
     
+     function agregar_sucursales_llanta($aLlanta)
+    {
+         $allantas = array();
+         $oLlanta = new \stdClass();
+         
+         $oLlanta->medida = '';
+         $oLlanta->capacidad_carga = '';
+         $oLlanta->indice_velocidad = '';
+         $oLlanta->numero_rin = '';
+         $oLlanta->id_productos_llantimax =''; 
+         $oLlanta->categoria = '';
+         $oLlanta->nombre ='';
+         $oLlanta->marca = '';
+         $oLlanta->modelo = '';
+         $oLlanta->precio = '';
+         $oLlanta->cantidad = '';
+         $oLlanta->fotografia_miniatura = '';
+         $oLlanta->sucursal = '';
+         $sucursales=DB::select('select * from sucursal');
+         $id_sucu="";
+         
+         for($a=0;$a<count($aLlanta);$a++)
+         {
+                 if(empty($allantas))
+                 {
+                     foreach($sucursales as $sucursal)
+                     {
+                         $oLlanta->medida = $aLlanta[$a]->medida;
+                         $oLlanta->capacidad_carga = $aLlanta[$a]->capacidad_carga;
+                         $oLlanta->indice_velocidad = $aLlanta[$a]->indice_velocidad;
+                         $oLlanta->numero_rin = $aLlanta[$a]->numero_rin;
+                         $oLlanta->id_productos_llantimax =$aLlanta[$a]->id_productos_llantimax;    
+                         $oLlanta->categoria = $aLlanta[$a]->categoria;
+                         $oLlanta->nombre =$aLlanta[$a]->nombre;
+                         $oLlanta->marca = $aLlanta[$a]->marca;
+                         $oLlanta->modelo = $aLlanta[$a]->modelo;
+                         $oLlanta->precio = $aLlanta[$a]->precio;
+                         $oLlanta->cantidad = $aLlanta[$a]->cantidad;
+                         $oLlanta->fotografia_miniatura = $aLlanta[$a]->fotografia_miniatura; 
+                         $oLlanta->sucursal = $sucursal->sucursal; 
+                         array_push($allantas,$oLlanta);
+                         $oLlanta = new \stdClass();
+                         $oLlanta->sucursal = '';
+                     }
+                     
+                 }
+                 else
+                 {
+                     $b=0;
+                     $bandera=0;
+                     while($b<count($allantas))
+                     {
+                         //echo $aLlanta[$a]->id_productos_llantimax. '=='. $allantas[$b]->id_productos_llantimax;
+                         
+                         if($aLlanta[$a]->id_productos_llantimax == $allantas[$b]->id_productos_llantimax)
+                         {
+                            $bandera=1;
+                              //echo '<br>';
+                             //echo 'sali del ciclo porque lo rompi';
+                            //echo '<br>';
+                         break; 
+                         }
+                         else
+                         {
+                        //      echo '<br>';
+                        //     echo 'No esta repetido';
+                        //    echo '<br>';
+                             $bandera=0;
+                             $b=$b+1;
+                         }
+                         
+                     }
+                     if($bandera==0)
+                     {
+                             foreach($sucursales as $sucursal)
+                         {
+                             $oLlanta->medida = $aLlanta[$a]->medida;
+                             $oLlanta->capacidad_carga = $aLlanta[$a]->capacidad_carga;
+                             $oLlanta->indice_velocidad = $aLlanta[$a]->indice_velocidad;
+                             $oLlanta->numero_rin = $aLlanta[$a]->numero_rin;
+                             $oLlanta->id_productos_llantimax =$aLlanta[$a]->id_productos_llantimax;    
+                             $oLlanta->categoria = $aLlanta[$a]->categoria;
+                             $oLlanta->nombre =$aLlanta[$a]->nombre;
+                             $oLlanta->marca = $aLlanta[$a]->marca;
+                             $oLlanta->modelo = $aLlanta[$a]->modelo;
+                             $oLlanta->precio = $aLlanta[$a]->precio;
+                             $oLlanta->cantidad = $aLlanta[$a]->cantidad;
+                             $oLlanta->fotografia_miniatura = $aLlanta[$a]->fotografia_miniatura; 
+                             $oLlanta->sucursal = $sucursal->sucursal; 
+                             array_push($allantas,$oLlanta);
+                             $oLlanta = new \stdClass();
+                             $oLlanta->sucursal = '';
+                         }
+                     
+                         
+                     }
+                     else
+                     {
+                        // echo '<br>';
+                          //   echo 'Si esta repetido no se mete';
+                        //    echo '<br>';
+                         
+                     }
+                     
+                 }
+         } 
+         
+        return $allantas;
+    }
+    
+    public function agregar_sucursales_bateria($aBateria)
+    {
+        $abaterias = array();
+         $oBateria = new \stdClass();
+      
+         $oBateria->voltaje='';
+         $oBateria->capacidad_arranque='';
+         $oBateria->capacidad_arranque_frio='';
+         $oBateria->medidas='';
+         $oBateria->peso='';
+         $oBateria->tamanio='';
+         $oBateria->id_productos_llantimax =''; 
+         $oBateria->categoria = '';
+         $oBateria->nombre ='';
+         $oBateria->marca = '';
+         $oBateria->modelo = '';
+         $oBateria->precio = '';
+         $oBateria->cantidad = '';
+         $oBateria->fotografia_miniatura = '';
+         $oBateria->sucursal = '';
+         $sucursales=DB::select('select * from sucursal');
+         $id_sucu="";
+         for($a=0;$a<count($aBateria);$a++)
+         {
+             if($aBateria[$a]->id_productos_llantimax!=$id_sucu)
+             {
+              foreach($sucursales as $sucursal)
+                 {
+                     $oBateria->voltaje=$aBateria[$a]->voltaje;
+                     $oBateria->capacidad_arranque=$aBateria[$a]->capacidad_arranque;
+                     $oBateria->capacidad_arranque_frio=$aBateria[$a]->capacidad_arranque_frio;
+                     $oBateria->medidas=$aBateria[$a]->medidas;
+                     $oBateria->peso=$aBateria[$a]->peso;
+                     $oBateria->tamanio=$aBateria[$a]->tamanio;
+                     $oBateria->id_productos_llantimax =$aBateria[$a]->id_productos_llantimax; 
+                     $oBateria->categoria = $aBateria[$a]->categoria;
+                     $oBateria->nombre =$aBateria[$a]->nombre;
+                     $oBateria->marca = $aBateria[$a]->marca;
+                     $oBateria->modelo = $aBateria[$a]->modelo;
+                     $oBateria->precio = $aBateria[$a]->precio;
+                     $oBateria->cantidad = $aBateria[$a]->cantidad;
+                     $oBateria->fotografia_miniatura = $aBateria[$a]->fotografia_miniatura;
+                     $oBateria->sucursal = $sucursal->sucursal;
+                     array_push($abaterias,$oBateria);
+                     $oBateria = new \stdClass();
+                     $oBateria->sucursal = '';
+                 }
+                 $id_sucu=$aBateria[$a]->id_productos_llantimax; 
+             }
+             else
+             {
+                 $id_sucu=$aBateria[$a]->id_productos_llantimax; 
+             }
+
+         } 
+        return $abaterias;
+    }
 }
+

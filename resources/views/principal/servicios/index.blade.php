@@ -30,14 +30,6 @@
 
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th>Id_Servicio</th>
-                            <th>Nombre del servicio</th>
-                            <th>Precio</th>
-                            <th>Descripción</th>
-                        </tr>
-                    </tfoot>
                     <tbody>
                         @foreach($servicios as $servicio)
                         <tr>
