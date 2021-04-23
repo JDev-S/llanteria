@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta name="description" content="bootstrap material admin template">
     <meta name="author" content="">
+    <meta name="csrf_token" content="{{ csrf_token() }}" />
 
     <title>Llantimax</title>
 
@@ -267,6 +268,93 @@
                                 </li>-->
                             </ul>
                         </li>
+                        <!-- -->
+                                                <li class="site-menu-item has-sub">
+                            <a href="javascript:void(0)">
+                                <i class="site-menu-icon md-palette" aria-hidden="true"></i>
+                                <span class="site-menu-title">Pedidos</span>
+                                <span class="site-menu-arrow"></span>
+                            </a>
+                            <ul class="site-menu-sub">
+
+                                <li class="site-menu-item">
+                                    <a href="/mostrar_clientes">
+                                        <span class="site-menu-title">Observar pedidos</span>
+                                    </a>
+                                </li>
+                                <li class="site-menu-item">
+                                    <a href="/agregar_cliente">
+                                        <span class="site-menu-title">Hacer pedido</span>
+                                    </a>
+                                </li>
+                                <!--<li class="site-menu-item">
+                                    <a href="uikit\dropdowns.html">
+                                        <span class="site-menu-title">Dropdowns</span>
+                                    </a>
+                                </li>
+                                <li class="site-menu-item">
+                                    <a href="uikit\icons.html">
+                                        <span class="site-menu-title">Icons</span>
+                                    </a>
+                                </li>
+                                <li class="site-menu-item">
+                                    <a href="uikit\list.html">
+                                        <span class="site-menu-title">List</span>
+                                    </a>
+                                </li>
+                                <li class="site-menu-item">
+                                    <a href="uikit\tooltip-popover.html">
+                                        <span class="site-menu-title">Tooltip &amp; Popover</span>
+                                    </a>
+                                </li>
+                                <li class="site-menu-item">
+                                    <a href="uikit\modals.html">
+                                        <span class="site-menu-title">Modals</span>
+                                    </a>
+                                </li>
+                                <li class="site-menu-item">
+                                    <a href="uikit\tabs-accordions.html">
+                                        <span class="site-menu-title">Tabs &amp; Accordions</span>
+                                    </a>
+                                </li>
+                                <li class="site-menu-item">
+                                    <a href="uikit\images.html">
+                                        <span class="site-menu-title">Images</span>
+                                    </a>
+                                </li>
+                                <li class="site-menu-item">
+                                    <a href="uikit\badges.html">
+                                        <span class="site-menu-title">Badges</span>
+                                    </a>
+                                </li>
+                                <li class="site-menu-item">
+                                    <a href="uikit\progress-bars.html">
+                                        <span class="site-menu-title">Progress Bars</span>
+                                    </a>
+                                </li>
+                                <li class="site-menu-item">
+                                    <a href="uikit\carousel.html">
+                                        <span class="site-menu-title">Carousel</span>
+                                    </a>
+                                </li>
+                                <li class="site-menu-item">
+                                    <a href="uikit\typography.html">
+                                        <span class="site-menu-title">Typography</span>
+                                    </a>
+                                </li>
+                                <li class="site-menu-item">
+                                    <a href="uikit\colors.html">
+                                        <span class="site-menu-title">Colors</span>
+                                    </a>
+                                </li>
+                                <li class="site-menu-item">
+                                    <a href="uikit\utilities.html">
+                                        <span class="site-menu-title">Utilties</span>
+                                    </a>
+                                </li>-->
+                            </ul>
+                        </li>
+                        <!-- -->
                         <!--  -->
 
 

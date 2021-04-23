@@ -9,21 +9,41 @@ use Illuminate\Support\Facades\Hash;
 use DB;
 class InventarioController extends Controller
 {
-
-    
+    public function formato_moneda($valor) 
+    {
+        if ($valor<0) return "-".formato_moneda(-$valor);
+        return '$' . number_format($valor, 2);
+    }
     
      public function agregar_inventario(Request $input)
 	{
         $producto = $input['producto'];
         $sucursal = $input['sucursal'];
         $cantidad = $input['cantidad'];
-            
-        $ingresar=DB::insert('insert into inventario (id_producto, id_sucursal, cantidad) values( ?, ?, ?)', [$producto,$sucursal, $cantidad]);
+        $id_producto="'".$producto."'";
+        $query=DB::select("select inventario.cantidad from inventario where inventario.id_producto=".$id_producto." and   inventario.id_sucursal=".$sucursal);
+         $cantidad_anterior=$query[0]->cantidad;
+         echo $producto."    ".$sucursal."   "."   ".$cantidad."   ".$cantidad_anterior;
+         echo '<br>';
+         $total_cantidad= intval($cantidad)+intval($cantidad_anterior);
+        echo $producto."    ".$sucursal."   ".$cantidad_anterior."   ".$total_cantidad;
+         
+        $query2=DB::update("update  inventario set cantidad='$total_cantidad' where inventario.id_producto=? and inventario.id_sucursal=? ",[$producto,$sucursal]);
+      
         
-        // INSERT INTO inventario(id_producto, id_sucursal, cantidad) VALUES (1,2,20)
-        
-         return redirect()->action('InventarioController@mostrar_inventarios')->withInput();
+         //return redirect()->action('InventarioController@mostrar_inventarios')->withInput();
       }
+    
+    public function mostrar_productos_sucursal_inventario(Request $input)
+    {
+        $sucursal = $input['sucursal'];
+        $query=DB::select('select id_productos_llantimax, categoria, nombre, marca, modelo from ((SELECT productos_llantimax.id_productos_llantimax, categoria.categoria, productos_llantimax.nombre, marca.marca, producto.modelo    FROM productos_llantimax inner join productos_servicios on productos_servicios.id_producto_servicio=productos_llantimax.id_productos_llantimax inner join producto on producto.id_producto=productos_servicios.id_producto_servicio INNER JOIN categoria on categoria.id_categoria=producto.id_categoria INNER JOIN caracteristica on categoria.id_categoria=caracteristica.id_categoria left join descripcion_categoria_caracteristica on descripcion_categoria_caracteristica.id_producto_descripcion=producto.id_producto and descripcion_categoria_caracteristica.id_categoria=caracteristica.id_categoria and descripcion_categoria_caracteristica.id_caracteristica=caracteristica.id_caracteristica inner join marca on marca.id_marca=producto.id_marca)
+
+        UNION
+
+        (SELECT productos_llantimax.id_productos_llantimax, (select "Refacción") as categoria, productos_llantimax.nombre, productos_independientes.marca, productos_independientes.modelo from productos_llantimax INNER join productos_independientes on productos_llantimax.id_productos_llantimax=productos_independientes.id_producto_independiente))as t1 left join inventario on t1.id_productos_llantimax=inventario.id_producto left join sucursal on sucursal.id_sucursal=inventario.id_sucursal where inventario.id_sucursal='.$sucursal.' ORDER BY t1.id_productos_llantimax');
+        return response()->json($query);
+    }
     
     public function mostrar_formulario()
     {
@@ -122,7 +142,7 @@ class InventarioController extends Controller
                   $oProducto_llanta->nombre = $producto->nombre;
                   $oProducto_llanta->marca = $producto->marca;
                   $oProducto_llanta->modelo = $producto->modelo;
-                  $oProducto_llanta->precio = $producto->precio;
+                  $oProducto_llanta->precio = InventarioController::formato_moneda($producto->precio);
                   $oProducto_llanta->cantidad = $producto->cantidad;
                   $oProducto_llanta->fotografia_miniatura = $producto->fotografia_miniatura;
                   //$oProducto_llanta->sucursal=$producto->sucursal;
@@ -164,7 +184,7 @@ class InventarioController extends Controller
                   $oProducto_refaccion->nombre = $producto->nombre;
                   $oProducto_refaccion->marca = $producto->marca;
                   $oProducto_refaccion->modelo = $producto->modelo;
-                  $oProducto_refaccion->precio = $producto->precio;
+                  $oProducto_refaccion->precio = InventarioController::formato_moneda($producto->precio);
                   $oProducto_refaccion->cantidad = $producto->cantidad;
                   $oProducto_refaccion->fotografia_miniatura = $producto->fotografia_miniatura;
                   //$oProducto_refaccion->sucursal=$producto->sucursal;
@@ -180,7 +200,7 @@ class InventarioController extends Controller
                   $oProducto_bateria->nombre = $producto->nombre;
                   $oProducto_bateria->marca = $producto->marca;
                   $oProducto_bateria->modelo = $producto->modelo;
-                  $oProducto_bateria->precio = $producto->precio;
+                  $oProducto_bateria->precio = InventarioController::formato_moneda($producto->precio);
                   $oProducto_bateria->cantidad = $producto->cantidad;
                   $oProducto_bateria->fotografia_miniatura = $producto->fotografia_miniatura;
                   //$oProducto_bateria->sucursal=$producto->sucursal;
@@ -297,6 +317,9 @@ class InventarioController extends Controller
                  {
                      foreach($sucursales as $sucursal)
                      {
+                         $id_producto="'".$aLlanta[$a]->id_productos_llantimax."'";
+                            $query2=DB::select("select inventario.cantidad from inventario where inventario.id_producto=".$id_producto." and   inventario.id_sucursal=".$sucursal->id_sucursal);
+                         
                          $oLlanta->medida = $aLlanta[$a]->medida;
                          $oLlanta->capacidad_carga = $aLlanta[$a]->capacidad_carga;
                          $oLlanta->indice_velocidad = $aLlanta[$a]->indice_velocidad;
@@ -307,7 +330,7 @@ class InventarioController extends Controller
                          $oLlanta->marca = $aLlanta[$a]->marca;
                          $oLlanta->modelo = $aLlanta[$a]->modelo;
                          $oLlanta->precio = $aLlanta[$a]->precio;
-                         $oLlanta->cantidad = $aLlanta[$a]->cantidad;
+                         $oLlanta->cantidad = $query2[0]->cantidad;
                          $oLlanta->fotografia_miniatura = $aLlanta[$a]->fotografia_miniatura; 
                          $oLlanta->sucursal = $sucursal->sucursal; 
                          array_push($allantas,$oLlanta);
@@ -346,6 +369,8 @@ class InventarioController extends Controller
                      {
                              foreach($sucursales as $sucursal)
                          {
+                            $id_producto="'".$aLlanta[$a]->id_productos_llantimax."'";
+                            $query2=DB::select("select inventario.cantidad from inventario where inventario.id_producto=".$id_producto." and   inventario.id_sucursal=".$sucursal->id_sucursal);
                              $oLlanta->medida = $aLlanta[$a]->medida;
                              $oLlanta->capacidad_carga = $aLlanta[$a]->capacidad_carga;
                              $oLlanta->indice_velocidad = $aLlanta[$a]->indice_velocidad;
@@ -356,7 +381,8 @@ class InventarioController extends Controller
                              $oLlanta->marca = $aLlanta[$a]->marca;
                              $oLlanta->modelo = $aLlanta[$a]->modelo;
                              $oLlanta->precio = $aLlanta[$a]->precio;
-                             $oLlanta->cantidad = $aLlanta[$a]->cantidad;
+                             $oLlanta->cantidad=$query2[0]->cantidad;
+                                 
                              $oLlanta->fotografia_miniatura = $aLlanta[$a]->fotografia_miniatura; 
                              $oLlanta->sucursal = $sucursal->sucursal; 
                              array_push($allantas,$oLlanta);
@@ -408,6 +434,9 @@ class InventarioController extends Controller
              {
               foreach($sucursales as $sucursal)
                  {
+                  $id_producto="'".$aBateria[$a]->id_productos_llantimax."'";
+                  $query2=DB::select("select inventario.cantidad from inventario where inventario.id_producto=".$id_producto." and   inventario.id_sucursal=".$sucursal->id_sucursal);
+                  
                      $oBateria->voltaje=$aBateria[$a]->voltaje;
                      $oBateria->capacidad_arranque=$aBateria[$a]->capacidad_arranque;
                      $oBateria->capacidad_arranque_frio=$aBateria[$a]->capacidad_arranque_frio;
@@ -420,7 +449,7 @@ class InventarioController extends Controller
                      $oBateria->marca = $aBateria[$a]->marca;
                      $oBateria->modelo = $aBateria[$a]->modelo;
                      $oBateria->precio = $aBateria[$a]->precio;
-                     $oBateria->cantidad = $aBateria[$a]->cantidad;
+                     $oBateria->cantidad = $query2[0]->cantidad;
                      $oBateria->fotografia_miniatura = $aBateria[$a]->fotografia_miniatura;
                      $oBateria->sucursal = $sucursal->sucursal;
                      array_push($abaterias,$oBateria);
@@ -438,4 +467,3 @@ class InventarioController extends Controller
         return $abaterias;
     }
 }
-

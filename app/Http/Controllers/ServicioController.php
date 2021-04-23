@@ -21,13 +21,10 @@ class ServicioController extends Controller
         $nombre_servicio = $input['nombre'];
         $precio = $input['precio'];
         $descripcion = $input['descripcion'];
-      //echo $nombre_servicio."    ".$precio."     ".$descripcion;
-       //return redirect()->back();
         $id_producto=ServicioController::generar_cadena_aleatoria();//(new BateriasController)->generar_cadena_aleatoria();////app(BateriasController:class)->generar_cadena_aleatoria();
         $ingresar=DB::select('call insertar_servicio_universal(?, ?, ?, ?)',[$id_producto,$nombre_servicio,$precio,$descripcion]);
         
-        //CALL insertar_servicio_universal (1,'alineación', 8000.00, 'alineación', 'se hacen un montón de cosas')
-         return redirect()->action('ServicioController@mostrar_servicios')->withInput();
+        
       }
     
     public function mostrar_formulario()

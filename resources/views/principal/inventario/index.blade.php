@@ -24,7 +24,7 @@
                     <thead>
                         <tr>
                             <th>Id_Producto</th>
-                            <th>Nombre del producto</th>
+                            <th>Código del producto</th>
                             <th>Categoria</th>
                             <th>Marca</th>
                             <th>Modelo</th>

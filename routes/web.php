@@ -55,8 +55,10 @@ Route::get('/mostrar_inventario','InventarioController@mostrar_inventarios')->mi
 Route::get('/agregar_inventario','InventarioController@mostrar_formulario')->middleware('admin:1')->name('agregar_inventario');
 
 /*Agregar un producto en inventario*/
-Route::post('/agregar_inventarios', 'InventarioController@agregar_inventario')->name('agregar_inventario');
+Route::post('/agregar_inventarios', 'InventarioController@agregar_inventario')->name('agregar_inventarios');
 
+/*Mostrar productos en el formulario de inventario*/
+Route::post('/mostrar_productos','InventarioController@mostrar_productos_sucursal_inventario')->name('mostrar_productos');
 
 /*SERVICIOS*/
 /*Mostrar servicios*/
@@ -67,7 +69,7 @@ Route::get('/mostrar_servicios','ServicioController@mostrar_servicios')->middlew
 Route::get('/agregar_servicio','ServicioController@mostrar_formulario')->middleware('admin:1')->name('agregar_servicio');
 
 /*Agregar un servicio*/
-Route::post('/agregar_servicios', 'ServicioController@agregar_servicio')->name('agregar_servicio');
+Route::post('/agregar_servicios', 'ServicioController@agregar_servicio')->name('agregar_servicios');
 
 
 /*Refacciones*/
@@ -79,7 +81,7 @@ Route::get('/mostrar_refacciones','RefaccionesController@mostrar_refacciones')->
 Route::get('/agregar_refaccion','RefaccionesController@mostrar_formulario')->middleware('admin:1')->name('agregar_refaccion');
 
 /*Agregar una refaccion*/
-Route::post('/agregar_refacciones', 'RefaccionesController@agregar_refaccion')->name('agregar_refaccion');
+Route::post('/agregar_refacciones', 'RefaccionesController@agregar_refaccion')->name('agregar_refacciones');
 
 
 /*Llantas*/
@@ -91,7 +93,7 @@ Route::get('/mostrar_llantas','LlantasController@mostrar_llantas')->middleware('
 Route::get('/agregar_llanta','LlantasController@mostrar_formulario')->middleware('admin:1')->name('agregar_llanta');
 
 /*Agregar una llanta*/
-Route::post('/agregar_llantas', 'LlantasController@agregar_llanta')->name('agregar_llanta');
+Route::post('/agregar_llantas', 'LlantasController@agregar_llanta')->name('agregar_llantas');
 
 
 /*Baterias*/
@@ -103,7 +105,7 @@ Route::get('/mostrar_baterias','BateriasController@mostrar_baterias')->middlewar
 Route::get('/agregar_bateria','BateriasController@mostrar_formulario')->middleware('admin:1')->name('agregar_bateria');
 
 /*Agregar una bateria*/
-Route::post('/agregar_baterias', 'BateriasController@agregar_bateria')->name('agregar_bateria');
+Route::post('/agregar_baterias', 'BateriasController@agregar_bateria')->name('agregar_baterias');
 
 
 /*  Ventas*/

@@ -24,7 +24,7 @@
                     <thead>
                         <tr>
                             <th>Id_Refacciones</th>
-                            <th>Nombre de la refaccion</th>
+                            <th>Código de la refacción</th>
                             <th>Sucursal</th>
                             <th>Precio</th>
                             <th>Fotografia</th>
@@ -34,19 +34,21 @@
 
                         </tr>
                     </thead>
-                   
+
                     <tbody>
                         @foreach($refacciones as $refaccion)
                         <tr>
                             <td>{{$refaccion-> id_refacciones}}</td>
                             <td>{{$refaccion-> nombre_refacciones}}</td>
                             <td>{{$refaccion-> sucursal}}</td>
-                            <td>{{$refaccion-> precio}}</td>
+                            <td>
+                                <?php if ($refaccion-> precio<0) return "-".formato_moneda(-$refaccion-> precio);
+                                echo '$' . number_format($refaccion-> precio, 2);?></td>
                             <td><img src="/img/{{$refaccion->foto}}" width="80px" height="80px" alt="{{$refaccion-> nombre_refacciones}}"></td>
                             <td>{{$refaccion-> marca}}</td>
                             <td>{{$refaccion-> modelo}}</td>
                             <td>{{$refaccion-> descripcion}}</td>
-                            
+
                         </tr>
                         @endforeach
                     </tbody>

@@ -8,6 +8,12 @@ use App\Http\Controllers\BateriasController;
 use DB;
 class LlantasController extends Controller
 {
+        public function formato_moneda($valor) 
+    {
+        if ($valor<0) return "-".formato_moneda(-$valor);
+        return '$' . number_format($valor, 2);
+    }
+    
         public function mostrar_llantas()
      {
          $aProducto_llanta = array();
@@ -53,7 +59,7 @@ class LlantasController extends Controller
                   $oProducto_llanta->nombre = $producto->nombre;
                   $oProducto_llanta->marca = $producto->marca;
                   $oProducto_llanta->modelo = $producto->modelo;
-                  $oProducto_llanta->precio = $producto->precio;
+                  $oProducto_llanta->precio =  LlantasController::formato_moneda($producto->precio);
                   $oProducto_llanta->cantidad = $producto->cantidad;
                   $oProducto_llanta->fotografia_miniatura = $producto->fotografia_miniatura;
                   //$oProducto_llanta->sucursal=$producto->sucursal;
@@ -181,7 +187,7 @@ class LlantasController extends Controller
         return $cadena_random."".($ventas_actuales+1);
     }
     
-         function agregar_sucursales_llanta($aLlanta)
+  function agregar_sucursales_llanta($aLlanta)
     {
          $allantas = array();
          $oLlanta = new \stdClass();
@@ -208,6 +214,9 @@ class LlantasController extends Controller
                  {
                      foreach($sucursales as $sucursal)
                      {
+                         $id_producto="'".$aLlanta[$a]->id_productos_llantimax."'";
+                            $query2=DB::select("select inventario.cantidad from inventario where inventario.id_producto=".$id_producto." and   inventario.id_sucursal=".$sucursal->id_sucursal);
+                         
                          $oLlanta->medida = $aLlanta[$a]->medida;
                          $oLlanta->capacidad_carga = $aLlanta[$a]->capacidad_carga;
                          $oLlanta->indice_velocidad = $aLlanta[$a]->indice_velocidad;
@@ -218,7 +227,7 @@ class LlantasController extends Controller
                          $oLlanta->marca = $aLlanta[$a]->marca;
                          $oLlanta->modelo = $aLlanta[$a]->modelo;
                          $oLlanta->precio = $aLlanta[$a]->precio;
-                         $oLlanta->cantidad = $aLlanta[$a]->cantidad;
+                         $oLlanta->cantidad = $query2[0]->cantidad;
                          $oLlanta->fotografia_miniatura = $aLlanta[$a]->fotografia_miniatura; 
                          $oLlanta->sucursal = $sucursal->sucursal; 
                          array_push($allantas,$oLlanta);
@@ -257,6 +266,8 @@ class LlantasController extends Controller
                      {
                              foreach($sucursales as $sucursal)
                          {
+                            $id_producto="'".$aLlanta[$a]->id_productos_llantimax."'";
+                            $query2=DB::select("select inventario.cantidad from inventario where inventario.id_producto=".$id_producto." and   inventario.id_sucursal=".$sucursal->id_sucursal);
                              $oLlanta->medida = $aLlanta[$a]->medida;
                              $oLlanta->capacidad_carga = $aLlanta[$a]->capacidad_carga;
                              $oLlanta->indice_velocidad = $aLlanta[$a]->indice_velocidad;
@@ -267,7 +278,8 @@ class LlantasController extends Controller
                              $oLlanta->marca = $aLlanta[$a]->marca;
                              $oLlanta->modelo = $aLlanta[$a]->modelo;
                              $oLlanta->precio = $aLlanta[$a]->precio;
-                             $oLlanta->cantidad = $aLlanta[$a]->cantidad;
+                             $oLlanta->cantidad=$query2[0]->cantidad;
+                                 
                              $oLlanta->fotografia_miniatura = $aLlanta[$a]->fotografia_miniatura; 
                              $oLlanta->sucursal = $sucursal->sucursal; 
                              array_push($allantas,$oLlanta);

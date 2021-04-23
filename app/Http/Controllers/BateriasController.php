@@ -7,14 +7,12 @@ use Illuminate\Database\Connection;
 use DB;
 class BateriasController extends Controller
 {
-     /* public function mostrar_baterias ()
+        public function formato_moneda($valor) 
     {
-       
-        $baterias=DB::select('(SELECT productos_llantimax.id_productos_llantimax as id_llanta, categoria.categoria, productos_llantimax.nombre as nombre_bateria, marca.marca, producto.modelo, productos_servicios.precio, producto.fotografia_miniatura as foto, caracteristica.caracteristica, descripcion_categoria_caracteristica.descripcion FROM productos_llantimax inner join productos_servicios on productos_servicios.id_producto_servicio=productos_llantimax.id_productos_llantimax inner join producto on producto.id_producto=productos_servicios.id_producto_servicio INNER JOIN categoria on categoria.id_categoria=producto.id_categoria INNER JOIN caracteristica on categoria.id_categoria=caracteristica.id_categoria left join descripcion_categoria_caracteristica on descripcion_categoria_caracteristica.id_producto_descripcion=producto.id_producto and descripcion_categoria_caracteristica.id_categoria=caracteristica.id_categoria and descripcion_categoria_caracteristica.id_caracteristica=caracteristica.id_caracteristica inner join marca on marca.id_marca=producto.id_marca where categoria.id_categoria=2)
-');
-             
-		
-    }*/
+        if ($valor<0) return "-".formato_moneda(-$valor);
+        return '$' . number_format($valor, 2);
+    }
+
     public function mostrar_baterias()
      {
          $aProducto_bateria = array();
@@ -63,7 +61,7 @@ class BateriasController extends Controller
                   $oProducto_bateria->nombre = $producto->nombre;
                   $oProducto_bateria->marca = $producto->marca;
                   $oProducto_bateria->modelo = $producto->modelo;
-                  $oProducto_bateria->precio = $producto->precio;
+                  $oProducto_bateria->precio = BateriasController::formato_moneda($producto->precio);
                   $oProducto_bateria->cantidad = $producto->cantidad;
                   $oProducto_bateria->fotografia_miniatura = $producto->fotografia_miniatura;
                   //$oProducto_bateria->sucursal=$producto->sucursal;
@@ -160,6 +158,7 @@ class BateriasController extends Controller
         
       //echo $nombre_servicio."    ".$precio."     ".$descripcion;
        //return redirect()->back();
+
         if($input->hasFile('fotografia_miniatura'))
         {
             $file=$input->file('fotografia_miniatura');
@@ -204,7 +203,7 @@ class BateriasController extends Controller
         return $cadena_random."".($ventas_actuales+1);
     }
     
-        public function agregar_sucursales_bateria($aBateria)
+public function agregar_sucursales_bateria($aBateria)
     {
         $abaterias = array();
          $oBateria = new \stdClass();
@@ -232,6 +231,9 @@ class BateriasController extends Controller
              {
               foreach($sucursales as $sucursal)
                  {
+                  $id_producto="'".$aBateria[$a]->id_productos_llantimax."'";
+                  $query2=DB::select("select inventario.cantidad from inventario where inventario.id_producto=".$id_producto." and   inventario.id_sucursal=".$sucursal->id_sucursal);
+                  
                      $oBateria->voltaje=$aBateria[$a]->voltaje;
                      $oBateria->capacidad_arranque=$aBateria[$a]->capacidad_arranque;
                      $oBateria->capacidad_arranque_frio=$aBateria[$a]->capacidad_arranque_frio;
@@ -244,7 +246,7 @@ class BateriasController extends Controller
                      $oBateria->marca = $aBateria[$a]->marca;
                      $oBateria->modelo = $aBateria[$a]->modelo;
                      $oBateria->precio = $aBateria[$a]->precio;
-                     $oBateria->cantidad = $aBateria[$a]->cantidad;
+                     $oBateria->cantidad = $query2[0]->cantidad;
                      $oBateria->fotografia_miniatura = $aBateria[$a]->fotografia_miniatura;
                      $oBateria->sucursal = $sucursal->sucursal;
                      array_push($abaterias,$oBateria);
@@ -261,4 +263,5 @@ class BateriasController extends Controller
          } 
         return $abaterias;
     }
+
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\BateriasController;
 use DB;
 class RefaccionesController extends Controller
 {
+    
     public function mostrar_refacciones ()
     {
         $refacciones=DB::select('select productos_llantimax.id_productos_llantimax as id_refacciones, productos_llantimax.nombre as nombre_refacciones,sucursal.sucursal as sucursal, productos_independientes.precio as precio,productos_independientes.fotografia_miniatura as foto,productos_independientes.marca as marca, productos_independientes.modelo as modelo,productos_independientes.descripcion as descripcion from productos_llantimax inner join productos_independientes on productos_llantimax.id_productos_llantimax=productos_independientes.id_producto_independiente inner join sucursal on sucursal.id_sucursal=productos_independientes.id_sucursal');
@@ -24,7 +25,7 @@ class RefaccionesController extends Controller
         $marca=$input['marca'];
         $modelo=$input['modelo'];
         $descripcion = $input['descripcion'];
-        
+         
         //secho $nombre_refaccion.' '.$sucursal.' '.$precio.' '.$marca.' '.$modelo.' '.$descripcion;
         
         
@@ -38,7 +39,7 @@ class RefaccionesController extends Controller
             $fotografia_miniatura=$name;
             $id_producto=RefaccionesController::generar_cadena_aleatoria();
              $ingresar=DB::select('call insertar_producto_independiente(?, ?, ?, ?, ?, ?, ?, ?)',[$id_producto,$nombre_refaccion,$sucursal,$precio,$fotografia_miniatura,$marca,$modelo,$descripcion]);
-             return redirect()->action('RefaccionesController@mostrar_refacciones')->withInput();
+             //return redirect()->action('RefaccionesController@mostrar_refacciones')->withInput();
         }
        
       

@@ -35,7 +35,10 @@
                         <tr>
                             <td>{{$servicio-> id_productos_llantimax}}</td>
                             <td>{{$servicio-> nombre}}</td>
-                            <td>{{$servicio-> precio}}</td>
+                            
+                            <td>
+                               <?php if ($servicio-> precio<0) return "-".formato_moneda(-$servicio-> precio);
+                                echo '$' . number_format($servicio-> precio, 2);?></td>
                             <td>{{$servicio-> descripcion}}</td>
                             
                         </tr>
