@@ -45,7 +45,7 @@
     <link rel="stylesheet" href="\global\fonts\brand-icons\brand-icons.min.css?v4.0.1">
     <link rel='stylesheet' href="css.css?family=Roboto:400,400italic,700">
 
-     @yield('styles')
+    @yield('styles')
     <!--[if lt IE 9]>
     <script src="../global/vendor/html5shiv/html5shiv.min.js?v4.0.1"></script>
     <![endif]-->
@@ -269,22 +269,27 @@
                             </ul>
                         </li>
                         <!-- -->
-                                                <li class="site-menu-item has-sub">
+                        <li class="site-menu-item has-sub">
                             <a href="javascript:void(0)">
                                 <i class="site-menu-icon md-palette" aria-hidden="true"></i>
-                                <span class="site-menu-title">Pedidos</span>
+                                <span class="site-menu-title">Proveedores</span>
                                 <span class="site-menu-arrow"></span>
                             </a>
                             <ul class="site-menu-sub">
 
                                 <li class="site-menu-item">
-                                    <a href="/mostrar_clientes">
-                                        <span class="site-menu-title">Observar pedidos</span>
+                                    <a href="/mostrar_proveedores">
+                                        <span class="site-menu-title">Observar proveedores</span>
                                     </a>
                                 </li>
                                 <li class="site-menu-item">
-                                    <a href="/agregar_cliente">
-                                        <span class="site-menu-title">Hacer pedido</span>
+                                    <a href="/agregar_proveedor">
+                                        <span class="site-menu-title">Agregar proveedor </span>
+                                    </a>
+                                </li>
+                                <li class="site-menu-item">
+                                    <a href="/agregar_catalogo">
+                                        <span class="site-menu-title">Agregar productos a proveedores </span>
                                     </a>
                                 </li>
                                 <!--<li class="site-menu-item">
@@ -795,7 +800,7 @@
                                 </li>
                             </ul>
                         </li>-->
-                       <!-- <li class="site-menu-item has-sub">
+                        <!-- <li class="site-menu-item has-sub">
                             <a href="javascript:void(0)">
                                 <i class="site-menu-icon md-chart" aria-hidden="true"></i>
                                 <span class="site-menu-title">Chart</span>
@@ -854,9 +859,8 @@
                                 </li>
                             </ul>
                         </li>-->
-
                         <!-- -->
-                    <li class="site-menu-category">Ventas</li>
+                        <li class="site-menu-category">Ventas</li>
                         <li class="site-menu-item has-sub">
                             <a href="javascript:void(0)">
                                 <i class="site-menu-icon md-palette" aria-hidden="true"></i>
@@ -864,13 +868,13 @@
                                 <span class="site-menu-arrow"></span>
                             </a>
                             <ul class="site-menu-sub">
-                                
+
                                 <li class="site-menu-item">
                                     <a href="/mostrar_venta">
                                         <span class="site-menu-title">Mostrar ventas</span>
                                     </a>
                                 </li>
-                                
+
                                 <li class="site-menu-item">
                                     <a href="/agregar_venta">
                                         <span class="site-menu-title">Generar venta</span>
@@ -886,11 +890,57 @@
                             </ul>
                         </li>
 
+                        <!-- -->
+
+                        <!-- -->
+                        <li class="site-menu-category">Pedidos</li>
+                        <li class="site-menu-item has-sub">
+                            <a href="javascript:void(0)">
+                                <i class="site-menu-icon md-palette" aria-hidden="true"></i>
+                                <span class="site-menu-title">Proveedores</span>
+                                <span class="site-menu-arrow"></span>
+                            </a>
+                            <ul class="site-menu-sub">
+
+                                <li class="site-menu-item">
+                                    <a href="/mostrar_pedido_proveedor">
+                                        <span class="site-menu-title">Mostrar pedidos</span>
+                                    </a>
+                                </li>
+
+                                <li class="site-menu-item">
+                                    <a href="/agregar_venta">
+                                        <span class="site-menu-title">Generar pedido</span>
+                                    </a>
+                                </li>
 
 
+                            </ul>
+                        </li>
+
+                        <li class="site-menu-item has-sub">
+                            <a href="javascript:void(0)">
+                                <i class="site-menu-icon md-palette" aria-hidden="true"></i>
+                                <span class="site-menu-title">Sucursales</span>
+                                <span class="site-menu-arrow"></span>
+                            </a>
+                            <ul class="site-menu-sub">
+
+                                <li class="site-menu-item">
+                                    <a href="/mostrar_venta">
+                                        <span class="site-menu-title">Mostrar pedidos</span>
+                                    </a>
+                                </li>
+
+                                <li class="site-menu-item">
+                                    <a href="/agregar_venta">
+                                        <span class="site-menu-title">Generar pedido</span>
+                                    </a>
+                                </li>
 
 
-
+                            </ul>
+                        </li>
                         <!-- -->
                     </ul>
                 </div>

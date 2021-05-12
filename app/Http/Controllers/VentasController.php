@@ -148,7 +148,18 @@ select inventario.id_producto as id_producto, productos_llantimax.nombre as nomb
     
     public function mostrar_ventas_realizadas()
     {
-        $ventas=DB::select("select venta.id_venta, (select DISTINCT usuario.nombre_completo from venta inner join usuario on usuario.id_usuario=venta.id_usuario and usuario.id_sucursal=venta.id_sucursal_usuario) as vendedor, sucursal.sucursal, clientes.nombre_completo as cliente, venta.total_venta, metodo_pago.metodo_pago, venta.fecha_venta, venta.factura from venta inner join usuario on usuario.id_usuario=venta.id_usuario and usuario.id_sucursal=venta.id_sucursal_usuario INNER JOIN sucursal on sucursal.id_sucursal=venta.id_sucursal INNER JOIN clientes on venta.id_cliente=clientes.id_cliente and venta.id_sucursal_cliente=clientes.id_sucursal inner join metodo_pago on venta.id_metodo_pago=metodo_pago.id_metodo_pago");
+        $ventas=DB::select("select venta.id_venta,
+	   usuario.nombre_completo as vendedor,
+	   sucursal.sucursal,
+	   clientes.nombre_completo as cliente,
+       venta.total_venta,
+       metodo_pago.metodo_pago,
+       venta.fecha_venta,
+       venta.factura 
+       FROM venta 
+       INNER join usuario on usuario.id_usuario=venta.id_usuario and usuario.id_sucursal=venta.id_sucursal_usuario 
+       INNER JOIN sucursal on sucursal.id_sucursal=venta.id_sucursal INNER JOIN clientes on venta.id_cliente=clientes.id_cliente and venta.id_sucursal_cliente=clientes.id_sucursal inner join metodo_pago on venta.id_metodo_pago=metodo_pago.id_metodo_pago
+       ");
              
 		return view('/principal/ventas/index',compact('ventas'));
     }

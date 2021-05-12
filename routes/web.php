@@ -44,6 +44,24 @@ Route::get('/agregar_cliente','ClientesController@mostrar_formulario')->middlewa
 /*Agregar un cliente*/
 Route::post('/agregar_clientes', 'ClientesController@agregar_cliente')->name('agregar_cliente');
 
+/*Proovedores*/
+/*Mostrar proveedores*/
+Route::get('/mostrar_proveedores','ProveedorController@mostrar_proveedor')->middleware('admin:1')->name('mostrar_proveedores');
+/*Mostrar formulario de proveedores*/
+Route::get('/agregar_proveedor','ProveedorController@mostrar_formulario')->middleware('admin:1')->name('agregar_cliente');
+/*Agregar un proveedor*/
+Route::post('/agregar_proveedores', 'ProveedorController@agregar_proveedor')->name('agregar_proveedores');
+
+/*Catalogo*/
+/*mostrar formulario para agregar catalogo*/
+Route::get('/agregar_catalogo','CatalogoController@mostrar_formulario')->middleware('admin:1')->name('agregar_catalogo');
+/*Mostrar productos en el formulario de catalogo*/
+Route::post('/mostrar_productos_catalogo','CatalogoController@mostrar_productos_sucursal_catalogo')-> name('mostrar_productos_catalogo');
+
+
+/*Pedidos sucursales*/
+/*Mostrar productos de las sucursales*/
+//Route::get('/mostrar_productos_sucursales/{sucursal?}','PedidoController@mostrar_productos_sucursales');
 
 /*INVENTARIO*/
 /*Mostrar inventario*/
@@ -116,4 +134,9 @@ Route::get('/mostrar_venta','VentasController@mostrar_ventas_realizadas')->middl
 Route::get('/agregar_venta','VentasController@mostrar_productos_ventas')->middleware('admin:1')->name('agregar_venta');
 
 Route::post('/insertar_venta', 'VentasController@insertar_venta')->name('insertar_venta');
+
+/*PEDIDOS A PROVEEDORES*/
+/*Mostrar pedidos a proveedores*/
+Route::get('/mostrar_pedido_proveedor','PedidoController@mostrar_pedidos_proveedor')->middleware('admin:1')
+->name('mostrar_pedido_proveedor');
 

@@ -318,6 +318,7 @@
             data: data,
             success: function(msg) {
                 alert(msg);
+                locatin.href="/mostrar_venta"
             }
         });
     }
