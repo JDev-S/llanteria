@@ -38,7 +38,7 @@
                     <tbody>
                         @foreach($ventas as $venta)
                         <tr>
-                            <td>{{$venta-> id_venta}}</td>
+                            <td><button class="btn btn-primary" data-target="#modalLlanta_{{$venta-> id_venta}}" data-toggle="modal" type="button">{{$venta-> id_venta}}</button></td>
                             <td>{{$venta-> vendedor}}</td>
                             <td>{{$venta-> sucursal}}</td>
                             <td>{{$venta-> cliente}}</td>
@@ -52,23 +52,53 @@
                 </table>
             </div>
         </div>
-        <!-- End Panel Basic -->
-
-        <!-- Panel Table Individual column searching -->
-
-        <!-- End Panel Table Individual column searching -->
-
-        <!-- Panel Table Tools -->
-
-        <!-- End Panel Table Tools -->
-
-        <!-- Panel Table Add Row -->
-
-        <!-- End Panel Table Add Row -->
-
-        <!-- Panel FixedHeader -->
-
-        <!-- End Panel FixedHeader -->
+       <!--MODAL DE LOS PEDIDOS-->
+        <?php
+        foreach($ventas as $venta)
+        {
+        echo'<div class="modal fade" id="modalLlanta_'.$venta-> id_venta.'" aria-hidden="true" aria-labelledby="modalLlanta_'.$venta-> id_venta.'" role="dialog" tabindex="-1">
+            <div class="modal-dialog modal-simple">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title">Detalle de la venta</h4>
+                    </div>
+                    <div class="modal-body">';
+                        echo'<table class="table">
+                        <thead>
+                        <th>Nombre del producto</th>
+                        <th>Cantidad del producto</th>
+                        <th>precio unidad</th>
+                        <th>total</th>
+                        </thead>
+                        
+                        <tbody>';
+                        for($a=0;$a<count($detalles);$a++)
+                        {
+                            if($detalles[$a]->id_venta==$venta->id_venta)
+                            {
+                                 echo '<tr>
+                                    <td>'.$detalles[$a]->nombre.'</td>
+                                   <td>'.$detalles[$a]->cantidad_producto.'</td>
+                                    <td>'.$detalles[$a]->precio_unidad.'</td>
+                                    <td>'.$detalles[$a]->total.'</td>
+                                   
+                                    </tr>';
+                            }
+                        }
+                       
+                    
+                        echo'</tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>';
+        }
+        ?>
+        <!--FIN MODAL LLANTAS-->
 
     </div>
 </div>

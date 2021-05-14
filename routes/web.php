@@ -139,4 +139,7 @@ Route::post('/insertar_venta', 'VentasController@insertar_venta')->name('inserta
 /*Mostrar pedidos a proveedores*/
 Route::get('/mostrar_pedido_proveedor','PedidoController@mostrar_pedidos_proveedor')->middleware('admin:1')
 ->name('mostrar_pedido_proveedor');
-
+/*Mostrar pedidos en proveedores*/
+Route::get('/mostrar_catalogo','PedidoController@mostrar_catalogo_proveedores')->middleware('admin:1')->name('mostrar_catalogo');
+/*Agregar un pedido en el proveedor*/
+Route::post('insertar_pedido_proveedor','PedidoController@generar_pedido_proveedor')->name('insertar_pedido_proveedor');

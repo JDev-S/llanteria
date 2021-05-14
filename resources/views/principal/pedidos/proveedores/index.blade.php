@@ -47,9 +47,11 @@
                 </table>
             </div>
         </div>
-        <!--MODAL DE LLANTAS-->
-        @foreach($pedidos_detalles as $detalle)
-        <div class="modal fade" id="modalLlanta_{{$detalle-> id_pedido_proveedor}}" aria-hidden="true" aria-labelledby="modalLlanta_{{$detalle-> id_pedido_proveedor}}" role="dialog" tabindex="-1">
+        <!--MODAL DE LOS PEDIDOS-->
+        <?php
+        foreach($pedidos_proveedores as $pedido)
+        {
+        echo'<div class="modal fade" id="modalLlanta_'.$pedido-> id_pedido.'" aria-hidden="true" aria-labelledby="modalLlanta_'.$pedido->id_pedido.'" role="dialog" tabindex="-1">
             <div class="modal-dialog modal-simple">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -58,50 +60,44 @@
                         </button>
                         <h4 class="modal-title">Detalle del pedido</h4>
                     </div>
-                    <div class="modal-body">
-                        <div class="example-grid">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="example-col">Nombre del usuario: {{$detalle->nombre_contacto}} </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="example-col">Sucursal del usuario: {{$detalle-> sucursal_usuario}}</div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="example-col">Total: {{$detalle-> total}}</div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="example-col">Cantidad: {{$detalle-> cantidad}}</div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="example-col">Precio por unidad: {{$detalle->precio_unidad}}</div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="example-col">Nombre del producto: {{$detalle->nombre}}</div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="example-col">Nombre del proveedor: {{$detalle->nombre_contacto}}</div>
-                                </div>
-                                
-                            </div>
-                            
-                            
-
-                        </div>
+                    <div class="modal-body">';
+                        echo'<table class="table">
+                        <thead>
+                        <th>Nombre del usuario</th>
+                        <th>Sucursal del usuario</th>
+                        <th>Total</th>
+                        <th>Cantidad</th>
+                        <th>Precio por unidad</th>
+                        <th>Nombre del producto</th>
+                        <th>Nombre del proveedor</th>
+                        </thead>
+                        
+                        <tbody>';
+                        for($a=0;$a<count($pedidos_detalles);$a++)
+                        {
+                            if($pedidos_detalles[$a]->id_pedido_proveedor==$pedido->id_pedido)
+                            {
+                                 echo '<tr>
+                                    <td>'.$pedidos_detalles[$a]->nombre_completo.'</td>
+                                   <td>'.$pedidos_detalles[$a]->sucursal_pedido.'</td>
+                                    <td>'.$pedidos_detalles[$a]->total.'</td>
+                                    <td>'.$pedidos_detalles[$a]->cantidad.'</td>
+                                    <td>'.$pedidos_detalles[$a]->precio_unidad.'</td>
+                                    <td>'.$pedidos_detalles[$a]->nombre.'</td>
+                                    <td>'.$pedidos_detalles[$a]->nombre_contacto.'</td>
+                                    </tr>';
+                            }
+                        }
+                       
+                    
+                        echo'</tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-        </div>
-        @endforeach
+        </div>';
+        }
+        ?>
         <!--FIN MODAL LLANTAS-->
 
     </div>

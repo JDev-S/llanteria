@@ -909,7 +909,7 @@
                                 </li>
 
                                 <li class="site-menu-item">
-                                    <a href="/agregar_venta">
+                                    <a href="/mostrar_catalogo">
                                         <span class="site-menu-title">Generar pedido</span>
                                     </a>
                                 </li>

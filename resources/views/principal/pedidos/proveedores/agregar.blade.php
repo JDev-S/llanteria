@@ -4,11 +4,11 @@
 <!-- Page -->
 <div class="page">
     <div class="page-header">
-        <h1 class="page-title">Form Layouts</h1>
+        <h1 class="page-title">Realizar un pedido a proveedor</h1>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="..\index.html">Home</a></li>
-            <li class="breadcrumb-item"><a href="javascript:void(0)">Forms</a></li>
-            <li class="breadcrumb-item active">Layouts</li>
+            <li class="breadcrumb-item"><a href="/principal">Home</a></li>
+            <li class="breadcrumb-item"><a href="javascript:void(0)">Pedido a proveedor</a></li>
+
         </ol>
 
     </div>
@@ -21,31 +21,27 @@
                 <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                     <thead>
                         <tr>
-                            <th>Foto</th>
                             <th>Nombre del producto</th>
-                            <th>Categoria</th>
-                            <th>Marca</th>
-                            <th>Modelo</th>
-                            <th>Precio</th>
-                            <th>Disponible</th>
+                            <th>Nombre del proveedor</th>
+                            <th>Nombre de la empresa</th>
+                            <th>Nombre de la sucursal</th>
+                            <th>Precio compra</th>
                             <th>Comprar</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        @foreach($inventarios as $inventario)
+                        @foreach($catalogos as $catalogo)
                         <tr>
-
-                            <td><img src="/img/{{$inventario->foto}}" width="50px" height="50px" alt="{{$inventario-> nombre_producto}}"></td>
-                            <td>{{$inventario-> nombre_producto}}</td>
-                            <td>{{$inventario-> categoria}}</td>
-                            <td>{{$inventario-> marca}}</td>
-                            <td>{{$inventario-> modelo}}</td>
-                            <td>{{$inventario-> precio}}</td>
-                            <td>{{$inventario-> cantidad}}</td>
+                            <td>{{$catalogo-> nombre}}</td>
+                            <td>{{$catalogo-> nombre_contacto}}</td>
+                            <td>{{$catalogo-> nombre_empresa}}</td>
+                            <td>{{$catalogo-> sucursal}}</td>
+                            <td>{{$catalogo-> precio_compra}}</td>
+                           
                             <!--<td> <a href="javascript:enviar()">comprar</a></td>-->
                             <!--<td><input type="button" onclick="enviar_formulario()" value="Comprar"></td>-->
-                            <td><a href="javascript:agregar_productos('{{$inventario-> id_producto}}','{{$inventario-> nombre_producto}}','{{$inventario-> precio}}','{{$inventario-> id_sucursal}}');" class="btn btn-sm btn-icon btn-pure btn-default on-default edit-row" data-toggle="tooltip" data-original-title="Comprar">Comprar</a></td>
+                            <td><a href="javascript:agregar_productos('{{$catalogo-> id_producto}}','{{$catalogo-> nombre}}','{{$catalogo-> precio_compra}}','{{$catalogo-> id_sucursal}}','{{$catalogo->id_catalogo}}');" class="btn btn-sm btn-icon btn-pure btn-default on-default edit-row" data-toggle="tooltip" data-original-title="Comprar">Pedir</a></td>
 
                         </tr>
                         @endforeach
@@ -75,78 +71,9 @@
                     <p>
                         LLena los campos para generar la venta
                     </p>
-                    <div class="example-wrap">
-
-                        <div class="example">
-                            <form class="form-inline">
-                                {{ csrf_field() }}
-                        </div>
-                        <?php
-                            $query2 = "select * from clientes ";
-                            $data2=DB::select($query2); 
-                            
-                            $query3 = "select * from metodo_pago ";
-                            $data3=DB::select($query3);
-                        ?>
-                        <div class="form-group form-material">
-                            <label class="form-control-label" for="inputBasicPassword">Nombre del cliente</label>
-                            <select class="form-control" id="id_cliente" required name="id_cliente">
-
-                                @foreach($data2 as $item)
-                                <option value="{{ $item->id_cliente }}"> {{ $item->nombre_completo }} </option>
-
-                                @endforeach
-
-                            </select>
-                        </div>
-
-                        <div class="form-group form-material">
-                            <label class="form-control-label" for="inputBasicPassword">Tipo de pago</label>
-                            <select class="form-control" id="id_metodo_pago" required name="id_metodo_pago" onChange="javascript:mostrar_formulario_credito()">
-
-
-                                @foreach($data3 as $item2)
-
-                                <option value="{{ $item2->id_metodo_pago}}"> {{ $item2->metodo_pago}} </option>
-
-                                @endforeach
-
-                            </select>
-                        </div>
-
-                        <div class="form-group form-material">
-                            <label class="form-control-label">Factura</label>
-                            <div>
-                                <div class="radio-custom radio-default radio-inline">
-                                    <div class="radio-custom radio-default radio-inline">
-                                        <input type="radio" id="factura" name="factura" value="1">
-                                        <label for="inputBasicMale">Sí</label>
-                                    </div>
-                                    <div class="radio-custom radio-default radio-inline">
-                                        <input type="radio" id="factura" name="factura" value="0">
-                                        <label for="inputBasicFemale">No</label>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="form-group form-material">
-                            <label class="form-control-label" for="inputBasicPassword">Automóvil</label>
-                            <textarea class="form-control" id="auto" name="auto" required placeholder="Auto"></textarea>
-
-                        </div>
-
-                        <div id="mostrar_formulario">
-
-                        </div>
-
-
-
-                        <div class="form-group form-material">
+                  
                             <input class="primary" type="button" name="enviar" value="Enviar" onclick="generar_venta();">
-                        </div>
-                        </form>
+
 
                     </div>
                 </div>
@@ -203,7 +130,7 @@
             "total": 1 * 3
         }
     ];*/
-    function agregar_productos(id_producto, nombre, precio, id_sucursal) {
+    function agregar_productos(id_producto, nombre, precio, id_sucursal,catalogo) {
         var tableRef = document.getElementById('productos');
         // Inserta una fila en la tabla, en el índice 0
         var fila = document.getElementById("cantidad").innerHTML;
@@ -226,7 +153,7 @@
                 "cantidad_producto": 1,
                 "precio_unidad": precio,
                 "total": 1 * parseInt(precio),
-                "id_sucursal_producto":id_sucursal
+                "catalogo": catalogo
             };
 
             productos.push(producto);
@@ -270,7 +197,7 @@
                     "cantidad_producto": 1,
                     "precio_unidad": precio,
                     "total": 1 * parseInt(precio),
-                    "id_sucursal_producto":id_sucursal
+                    "catalogo": catalogo
                 };
 
                 productos.push(producto);
@@ -283,16 +210,12 @@
     function generar_venta() {
         id_cliente = "";
         factura = "";
-        comentario_credito = "";
-        fecha_credito = "";
         id_metodo_pago = "";
         alert("Generando venta");
         console.log(productos);
-        var cliente = document.getElementById('id_cliente');
-         var auto = document.getElementById('auto').value;
-        var pago = document.getElementById('id_metodo_pago').value;
-        id_cliente = cliente.value;
-        id_metodo_pago = pago.value;
+        //var cliente = document.getElementById('id_cliente');
+        //var pago = document.getElementById('id_metodo_pago');
+        
 
         var memo = document.getElementsByName('factura');
         for (i = 0; i < memo.length; i++) {
@@ -302,13 +225,6 @@
             }
 
         }
-        if (pago == "3") {
-            fecha_credito = document.getElementById('fecha').value;
-            comentario_credito = document.getElementById('descripcion').value;
-        } else {
-            fecha_credito = "";
-            comentario_credito = "";
-        }
         var total_venta = 0;
         for (var t = 0; t < productos.length; t++) {
             total_venta += parseInt(productos[t]['total']);
@@ -316,25 +232,18 @@
 
         var token = '{{csrf_token()}}';
         var data = {
-            id_cliente: id_cliente,
-            id_metodo_pago: pago,
             total_venta: total_venta,
-            factura: factura,
             array_productos: productos,
-            fecha: fecha_credito,
-            descripcion: comentario_credito,
-            auto:auto,
             _token: token
         };
-        console.log(data);
+
         $.ajax({
             type: "POST",
-            url: "/insertar_venta",
+            url: "/insertar_pedido_proveedor",
             data: data,
             success: function(msg) {
-               
                 alert(msg);
-                location.href = "/mostrar_venta";
+                locatin.href = "/mostrar_venta"
             }
         });
     }
@@ -345,38 +254,6 @@
         var d = row.parentNode.parentNode.rowIndex;
         alert(d);
         document.getElementById('tabla_productos').deleteRow(d);
-    }
-
-
-    function mostrar_formulario_credito() {
-        var formulario = document.getElementById("mostrar_formulario").innerHTML = "";
-        var pago = document.getElementById('id_metodo_pago').value;
-       
-        alert(pago);
-        if (pago == "3") {
-            alert("es acredito");
-            var formulario =
-                '<div class="form-group form-material">' +
-                '<label class="form-control-label">Fecha de ultimo dia</label>' +
-                '<div>' +
-                '<input type="date" name="fecha" id="fecha">' +
-                '</div>' +
-                '</div>' +
-                '<div class="form-group form-material">' +
-                '<label class="form-control-label">Comentario de credito</label>' +
-                '<div>' +
-                '<textarea class="form-control" id="descripcion" name="descripcion" required placeholder="Descripción"></textarea>'
-            '</div>' +
-            '</div>';
-
-
-            document.getElementById("mostrar_formulario").innerHTML = formulario;
-
-        } else {
-            alert("No es acredito");
-            document.getElementById("mostrar_formulario").innerHTML = ""
-        }
-
     }
 
 </script>
