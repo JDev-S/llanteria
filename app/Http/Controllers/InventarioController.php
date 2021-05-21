@@ -285,6 +285,7 @@ class InventarioController extends Controller
           //echo '<br>';
           //echo '<br>';
          $aProducto_baterias = InventarioController::agregar_sucursales_bateria($aProducto_bateria);
+       
         //print_r($aProducto_baterias);
        
         return view('/principal/inventario/index',compact('aProducto_baterias','aProducto_llantas','aProducto_refaccion'));  
@@ -406,7 +407,7 @@ class InventarioController extends Controller
         return $allantas;
     }
     
-    public function agregar_sucursales_bateria($aBateria)
+    /*public function agregar_sucursales_bateria($aBateria)
     {
         $abaterias = array();
          $oBateria = new \stdClass();
@@ -464,6 +465,131 @@ class InventarioController extends Controller
              }
 
          } 
+        return $abaterias;
+    }*/
+    
+         function agregar_sucursales_bateria($aBateria)
+    {
+                $abaterias = array();
+         $oBateria = new \stdClass();
+      
+         $oBateria->voltaje='';
+         $oBateria->capacidad_arranque='';
+         $oBateria->capacidad_arranque_frio='';
+         $oBateria->medidas='';
+         $oBateria->peso='';
+         $oBateria->tamanio='';
+         $oBateria->id_productos_llantimax =''; 
+         $oBateria->categoria = '';
+         $oBateria->nombre ='';
+         $oBateria->marca = '';
+         $oBateria->modelo = '';
+         $oBateria->precio = '';
+         $oBateria->cantidad = '';
+         $oBateria->fotografia_miniatura = '';
+         $oBateria->sucursal = '';
+         $sucursales=DB::select('select * from sucursal');
+         $id_sucu="";
+         
+         for($a=0;$a<count($aBateria);$a++)
+         {
+                 if(empty($abaterias))
+                 {
+                     foreach($sucursales as $sucursal)
+                     {
+                         $id_producto="'".$aBateria[$a]->id_productos_llantimax."'";
+                            $query2=DB::select("select inventario.cantidad from inventario where inventario.id_producto=".$id_producto." and   inventario.id_sucursal=".$sucursal->id_sucursal);
+                         
+                     $oBateria->voltaje=$aBateria[$a]->voltaje;
+                     $oBateria->capacidad_arranque=$aBateria[$a]->capacidad_arranque;
+                     $oBateria->capacidad_arranque_frio=$aBateria[$a]->capacidad_arranque_frio;
+                     $oBateria->medidas=$aBateria[$a]->medidas;
+                     $oBateria->peso=$aBateria[$a]->peso;
+                     $oBateria->tamanio=$aBateria[$a]->tamanio;
+                     $oBateria->id_productos_llantimax =$aBateria[$a]->id_productos_llantimax; 
+                     $oBateria->categoria = $aBateria[$a]->categoria;
+                     $oBateria->nombre =$aBateria[$a]->nombre;
+                     $oBateria->marca = $aBateria[$a]->marca;
+                     $oBateria->modelo = $aBateria[$a]->modelo;
+                     $oBateria->precio = $aBateria[$a]->precio;
+                     $oBateria->cantidad = $query2[0]->cantidad;
+                     $oBateria->fotografia_miniatura = $aBateria[$a]->fotografia_miniatura;
+                     $oBateria->sucursal = $sucursal->sucursal;
+                     array_push($abaterias,$oBateria);
+                     $oBateria = new \stdClass();
+                     $oBateria->sucursal = '';
+                     }
+                     
+                 }
+                 else
+                 {
+                     $b=0;
+                     $bandera=0;
+                     while($b<count($abaterias))
+                     {
+                         //echo $aLlanta[$a]->id_productos_llantimax. '=='. $allantas[$b]->id_productos_llantimax;
+                         
+                         if($aBateria[$a]->id_productos_llantimax == $abaterias[$b]->id_productos_llantimax)
+                         {
+                            $bandera=1;
+                              //echo '<br>';
+                             //echo 'sali del ciclo porque lo rompi';
+                            //echo '<br>';
+                         break; 
+                         }
+                         else
+                         {
+                        //      echo '<br>';
+                        //     echo 'No esta repetido';
+                        //    echo '<br>';
+                             $bandera=0;
+                             $b=$b+1;
+                         }
+                         
+                     }
+                     if($bandera==0)
+                     {
+                             foreach($sucursales as $sucursal)
+                         {
+                            $id_producto="'".$aBateria[$a]->id_productos_llantimax."'";
+                            $query2=DB::select("select inventario.cantidad from inventario where inventario.id_producto=".$id_producto." and   inventario.id_sucursal=".$sucursal->id_sucursal);
+                              $oBateria->voltaje=$aBateria[$a]->voltaje;
+                     $oBateria->capacidad_arranque=$aBateria[$a]->capacidad_arranque;
+                     $oBateria->capacidad_arranque_frio=$aBateria[$a]->capacidad_arranque_frio;
+                     $oBateria->medidas=$aBateria[$a]->medidas;
+                     $oBateria->peso=$aBateria[$a]->peso;
+                     $oBateria->tamanio=$aBateria[$a]->tamanio;
+                     $oBateria->id_productos_llantimax =$aBateria[$a]->id_productos_llantimax; 
+                     $oBateria->categoria = $aBateria[$a]->categoria;
+                     $oBateria->nombre =$aBateria[$a]->nombre;
+                     $oBateria->marca = $aBateria[$a]->marca;
+                     $oBateria->modelo = $aBateria[$a]->modelo;
+                     $oBateria->precio = $aBateria[$a]->precio;
+                     $oBateria->cantidad = $query2[0]->cantidad;
+                     $oBateria->fotografia_miniatura = $aBateria[$a]->fotografia_miniatura;
+                     $oBateria->sucursal = $sucursal->sucursal;
+                     array_push($abaterias,$oBateria);
+                     $oBateria = new \stdClass();
+                     $oBateria->sucursal = '';
+                            /*
+                            
+                            
+                            */
+                         }
+                     
+                         
+                     }
+                     else
+                     {
+                        // echo '<br>';
+                          //   echo 'Si esta repetido no se mete';
+                        //    echo '<br>';
+                         
+                     }
+                     
+                 }
+         } 
+         
         return $abaterias;
     }
 }

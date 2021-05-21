@@ -881,7 +881,11 @@
                                     </a>
                                 </li>
 
-
+                                 <li class="site-menu-item">
+                                    <a href="/mostrar_reportes">
+                                        <span class="site-menu-title">Mostrar reportes</span>
+                                    </a>
+                                </li>
 
 
 
@@ -891,6 +895,29 @@
                         </li>
 
                         <!-- -->
+                         <!-- -->
+                        <li class="site-menu-category">Créditos</li>
+                        <li class="site-menu-item has-sub">
+                            <a href="javascript:void(0)">
+                                <i class="site-menu-icon md-palette" aria-hidden="true"></i>
+                                <span class="site-menu-title">Creditos a clientes</span>
+                                <span class="site-menu-arrow"></span>
+                            </a>
+                            <ul class="site-menu-sub">
+
+                                <li class="site-menu-item">
+                                    <a href="/mostrar_creditos">
+                                        <span class="site-menu-title">Mostrar créditos</span>
+                                    </a>
+                                </li>
+
+
+                            </ul>
+                        </li>
+
+                        <!-- -->
+                        
+                        
 
                         <!-- -->
                         <li class="site-menu-category">Pedidos</li>
@@ -927,13 +954,18 @@
                             <ul class="site-menu-sub">
 
                                 <li class="site-menu-item">
-                                    <a href="/mostrar_venta">
+                                    <a href="/mostrar_pedido_sucursal">
                                         <span class="site-menu-title">Mostrar pedidos</span>
+                                    </a>
+                                </li>
+                                <li class="site-menu-item">
+                                    <a href="/mostrar_pedido_solicitado">
+                                        <span class="site-menu-title">Mostrar pedidos solicitados</span>
                                     </a>
                                 </li>
 
                                 <li class="site-menu-item">
-                                    <a href="/agregar_venta">
+                                    <a href="/pedido_sucursal">
                                         <span class="site-menu-title">Generar pedido</span>
                                     </a>
                                 </li>

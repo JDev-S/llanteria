@@ -42,7 +42,7 @@ Route::get('/mostrar_clientes','ClientesController@mostrar_clientes')->middlewar
 Route::get('/agregar_cliente','ClientesController@mostrar_formulario')->middleware('admin:1')->name('agregar_cliente');
 
 /*Agregar un cliente*/
-Route::post('/agregar_clientes', 'ClientesController@agregar_cliente')->name('agregar_cliente');
+Route::post('/agregar_clientes', 'ClientesController@agregar_cliente')->name('agregar_clientes');
 
 /*Proovedores*/
 /*Mostrar proveedores*/
@@ -142,4 +142,33 @@ Route::get('/mostrar_pedido_proveedor','PedidoController@mostrar_pedidos_proveed
 /*Mostrar pedidos en proveedores*/
 Route::get('/mostrar_catalogo','PedidoController@mostrar_catalogo_proveedores')->middleware('admin:1')->name('mostrar_catalogo');
 /*Agregar un pedido en el proveedor*/
-Route::post('insertar_pedido_proveedor','PedidoController@generar_pedido_proveedor')->name('insertar_pedido_proveedor');
+Route::post('/insertar_pedido_proveedor','PedidoController@generar_pedido_proveedor')->name('insertar_pedido_proveedor');
+
+/*PEDIDOS A SUCURSALES*/
+/*MOSTRAR PEDIDOS A SUCURSALES*/
+Route::get('/mostrar_pedido_sucursal','PedidoController@mostrar_pedidos_sucursales')->middleware('admin:1')
+->name('mostrar_pedido_sucursal');
+/*VENTANA PARA HACER UN PEDIDO*/
+Route::get('/pedido_sucursal','PedidoController@pedido_sucursal')->middleware('admin:1')
+->name('pedido_sucursal');
+/*Mostrar_productos_sucursal_pedido*/
+Route::post('/mostrar_productos_pedidos', 'PedidoController@obtener_productos_sucursales')->name('mostrar_productos_pedidos');
+/*PETICION DE HACER PEDIDOS SUCURSALES*/
+Route::post('/insertar_pedido_sucursal','PedidoController@agregar_pedidos_sucursales')->name('insertar_pedido_sucursal');
+
+/*MOSTRAR PEDIDOS SOLICITADOS*/
+Route::get('/mostrar_pedido_solicitado','PedidoController@mostrar_pedidos_solicitados')->middleware('admin:1')
+->name('mostrar_pedido_solicitado');
+/*ACTUALIZAR STATUS DEL PEDIDO*/
+Route::post('/actualizar_status_pedido','PedidoController@actualizar_status_pedido')->name('actualizar_status_pedido');
+
+/*Creditos a clientes*/
+/*Mostrar creditos a clientes*/
+Route::get('/mostrar_creditos','CreditoController@mostrar_creditos')->middleware('admin:1')->name('mostrar_creditos');
+/*Hacer un abono credito*/
+Route::post('/insertar_abono', 'CreditoController@agregar_abono')->name('insertar_abono');
+
+/*Reporte de ventas*/
+Route::get('/mostrar_reportes','VentasController@mostrar_reportes')->middleware('admin:1')->name('mostrar_reportes');
+/*MOSTRAR REPORTE DE VENTAS*/
+Route::post('/mostrar_reportes_ventas', 'VentasController@mostrar_reportes_ventas')->name('mostrar_reportes_ventas');

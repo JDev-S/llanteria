@@ -13,7 +13,7 @@
     </div>
 
     <div class="page-content">
-        <form autocomplete="off" enctype="multipart/form-data" method="POST" action={{route('agregar_cliente')}}>
+        <form autocomplete="off" enctype="multipart/form-data" method="POST" action={{route('agregar_clientes')}}>
             {{ csrf_field() }}
             <div class="panel">
                 <div class="panel-body container-fluid">

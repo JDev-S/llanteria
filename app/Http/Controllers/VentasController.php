@@ -100,6 +100,15 @@ SELECT productos_llantimax.id_productos_llantimax as id_producto, productos_llan
        DB::beginTransaction();
         try{
             /*GENERAR VENTA*/
+            if($id_metodo_pago==3)
+            {
+                echo 'total_venta '.$total_venta;
+                $total_final=intval($total_venta)*0.30;
+                $total_venta=intval($total_venta)+$total_final;
+            }
+            echo 'total_venta_final : '.$total_venta."    30%mas    ".$total_final;
+            
+            
             $ingresar = DB::insert('INSERT INTO venta(id_venta, id_usuario, id_sucursal_usuario, id_sucursal, id_cliente, id_sucursal_cliente, id_metodo_pago, total_venta, fecha_venta, factura,auto) VALUES(?,?,?,?,?,?,?,?,?,?,?)', [$id_venta, $id_usuario, $id_sucursal_usuario, $id_sucursal, $id_cliente, $id_sucursal_cliente, $id_metodo_pago, $total_venta, $fecha_venta, $factura,$auto]);
        
             /*INSERTAR DETALLE DE LA VENTA*/
@@ -260,5 +269,21 @@ SELECT productos_llantimax.id_productos_llantimax as id_producto, productos_llan
          die();
         //return $array_lista_productos;
     }*/
+    
+    function mostrar_reportes()
+    {
+        $reportes="";
+        return view('/principal/ventas/reporte_ventas',compact('reportes'));
+    }
+    
+    function mostrar_reportes_ventas(Request $input)
+    {
+        $fecha_inicio=$input['fecha_inicio'];
+        $fecha_fin=$input['fecha_fin'];
         
+        $query=DB::select("SELECT venta.id_sucursal, sucursal.sucursal, SUM(total_venta) as venta FROM venta INNER JOIN sucursal ON sucursal.id_sucursal=venta.id_sucursal WHERE fecha_venta BETWEEN '".$fecha_inicio."' AND '".$fecha_fin."' GROUP BY id_sucursal");
+        
+        $json=json_encode($query);
+		return response()->json($json);
+    }
 }
